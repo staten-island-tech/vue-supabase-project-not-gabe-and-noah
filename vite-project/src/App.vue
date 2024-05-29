@@ -1,25 +1,20 @@
 <script setup>
-import { ref, onMounted } from 'vue'
-import { supabase } from './lib/supabaseClient'
+import {RouterLink, RouterView } from 'vue-router'
 
-const countries = ref([])
-
-async function getCountries() {
-  const { data } = await supabase.from('countries').select()
-  countries.value = data
-}
-
-onMounted(() => {
-  getCountries()
-})
 </script>
 
 <template>
-  <ul>
-    <li v-for="country in countries" :key="country.id">{{ country.name }}</li>
-  </ul>
+  <div class="container">
+    <nav>
+      <router-link to="/">Home</router-link>
+      <router-link to="/secret">Secret</router-link>
+      <router-link to="/login">Login</router-link>
+    </nav>
+  </div>
+  <div class="content">
+	<RouterView />
+  </div>
 </template>
-
 
 <style scoped>
 header {

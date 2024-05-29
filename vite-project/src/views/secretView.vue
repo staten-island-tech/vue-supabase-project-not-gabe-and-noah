@@ -4,6 +4,8 @@
   
 <template>
   <main>
-    <h1>HI NOAH ABBAS</h1>
+    <div class="about">
+    <h1>TEST</h1>
+  </div>
   </main>
 </template>
