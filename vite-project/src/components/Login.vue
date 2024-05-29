@@ -1,4 +1,5 @@
 <template>
+	<wave></wave>
 <div class="container" id="container">
 	<div class="form-container sign-up-container">
 		<form action="#">
@@ -14,7 +15,7 @@
 		<form action="#">
 			<h1>Sign in</h1>
 			<span>Use your account to sign in.</span>
-			<input type="email" placeholder="Email" />
+			<input type="email" placeholder="Username" />
 			<input type="password" placeholder="Password" />
 			<a href="#">Forgot your password?</a>
 			<button>Sign In</button>
@@ -38,6 +39,9 @@
 </template>
 
 <script setup lang="ts">
+
+import wave from '@/components/wave.vue'
+
 import { onMounted } from 'vue';
 
 onMounted(() => {
@@ -151,7 +155,6 @@ input {
 }
 
 .container {
-	background-color: #fff;
 	border-radius: 10px;
   	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 
 			0 10px 10px rgba(0,0,0,0.22);
@@ -159,9 +162,10 @@ input {
 	top: 50%;
 	left: 50%;
 	overflow: hidden;
-	width: 768px;
+	width: 1068px;
 	max-width: 100%;
-	min-height: 480px;
+	min-height: 580px;
+	border-color: black solid 2px;
 	transform: translate(-50%, -50%);
 
 }
