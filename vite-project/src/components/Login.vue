@@ -163,6 +163,7 @@ input {
 	max-width: 100%;
 	min-height: 480px;
 	transform: translate(-50%, -50%);
+	z-index: -1000;
 
 }
 
