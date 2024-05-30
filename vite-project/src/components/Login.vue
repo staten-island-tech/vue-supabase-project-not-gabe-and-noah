@@ -5,7 +5,7 @@
 		<form action="#">
 			<h1>Create Account</h1>
 			<span>Use your email for registration.</span>
-			<input type="text" placeholder="Name" />
+			<input type="text" placeholder="Username" />
 			<input type="email" placeholder="Email" />
 			<input type="password" placeholder="Password" />
 			<button>Sign Up</button>
@@ -15,7 +15,7 @@
 		<form action="#">
 			<h1>Sign in</h1>
 			<span>Use your account to sign in.</span>
-			<input type="email" placeholder="Username" />
+			<input type="email" placeholder="Email" />
 			<input type="password" placeholder="Password" />
 			<a href="#">Forgot your password?</a>
 			<button>Sign In</button>
