@@ -9,10 +9,10 @@ import main from '@/components/main.vue';
 
 
 
-  <NavBar></NavBar>
   <header>
+    <NavBar></NavBar>
       <nav>
-       <Login></Login>
+       <main></main>
       </nav>
   </header>
 </template>

@@ -30,8 +30,7 @@
     position: fixed;
     width: 200%;
     height: 12em;
-    animation: wave 10s -3s linear infinite;
-    transform: translate3d(0, 0, 0);
+    animation: wave 10s -3s infinite;
     opacity: 0.8;
     bottom: 0;
     left: 0;
