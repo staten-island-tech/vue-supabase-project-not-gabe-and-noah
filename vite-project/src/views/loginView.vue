@@ -25,10 +25,10 @@ let password = ref("");
 async function createAccount(){
     const {data, error} = await supabase.auth.signUp({
       email: email.value,
-      password: password.value
+      password: password.value,
       data: {
-        confirmation_sent_at: Date.now();
-      }
+        confirmation_sent_at: Date.now(),
+    },
     })
     if (error){
       console.log(error)
