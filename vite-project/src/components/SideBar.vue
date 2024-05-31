@@ -114,7 +114,7 @@ font-size:20px;
 }
 
 
-.main-menu:hover,nav.main-menu.expanded {
+.main-menu,nav.main-menu.expanded {
 width:250px;
 overflow:visible;
 }
@@ -127,8 +127,8 @@ top:0;
 bottom:0;
 height:100%;
 left:0;
-width:60px;
-overflow:hidden;
+width: calc(15%); 
+overflow:auto;
 -webkit-transition:width .05s linear;
 transition:width .05s linear;
 -webkit-transform:translateZ(0) scale(1,1);
