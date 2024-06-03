@@ -28,7 +28,7 @@ let ScreenHeight = ref(screen.height * .95)
   bottom: 0px;
   right: 0px;
   height: calc(100% - 5%);
-  width: calc(85%);
+  width: calc(100%);
 }
 
 </style>

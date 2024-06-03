@@ -17,5 +17,6 @@
   right: 0px;
   height: 5%;
   position: absolute;
+  text-align: center;
 }
 </style>
