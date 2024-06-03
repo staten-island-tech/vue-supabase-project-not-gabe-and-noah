@@ -8,7 +8,7 @@
 			<input type="text" placeholder="Username" />
 			<input type="email" placeholder="Email" />
 			<input type="password" placeholder="Password" />
-			<button>Sign Up</button>
+			<button @click="createAccount">Sign Up</button>
 		</form>
 	</div>
 	<div class="form-container sign-in-container">
@@ -18,7 +18,7 @@
 			<input type="email" placeholder="Email" />
 			<input type="password" placeholder="Password" />
 			<a href="#">Forgot your password?</a>
-			<button>Sign In</button>
+			<button @click="login">Sign In</button>
 		</form>
 	</div>
 	<div class="overlay-container">
@@ -26,7 +26,7 @@
 			<div class="overlay-panel overlay-left">
 				<h1>Welcome Back!</h1>
 				<p>Log back in to continue using our website.</p>
-				<button class="ghost" id="signIn">Sign In</button>
+				<button class="ghost" id="signIn"> Sign In</button>
 			</div>
 			<div class="overlay-panel overlay-right">
 				<h1>New to our website?</h1>
@@ -43,6 +43,50 @@
 import wave from '@/components/wave.vue'
 
 import { onMounted } from 'vue';
+import { ref } from "vue";
+import { supabase } from "../lib/supabaseClient.ts";
+
+let email = ref("");
+let password = ref("");
+
+async function createAccount(){
+    const {data, error} = await supabase.auth.signUp({
+      email: email.value,
+      password: password.value,
+      data: {
+        confirmation_sent_at: Date.now(),
+    },
+    })
+    if (error){
+      console.log(error)
+    } else{
+      console.log(data)
+    }
+  }
+
+async function seeCurrentUser(){
+    const localUser = await supabase.auth.getSession();
+    console.log(localUser)
+  }
+
+async function login(){
+    const {data, error} = await supabase.auth.signInWithPassword({
+      email: email.value,
+      password: password.value
+    }) 
+    if (error) {
+      console.log(error)
+    } else {
+      console.log(data)
+    }
+  }
+
+async function logout(){
+    const {error} = await supabase.auth.signOut();
+    if (error) {
+      console.log(error)
+    } else { console.log('logged out!!!')}
+  }
 
 onMounted(() => {
 	const signUpButton = document.getElementById('signUp');
