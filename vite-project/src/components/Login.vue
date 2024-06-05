@@ -5,20 +5,20 @@
 		<form action="#">
 			<h1>Create Account</h1>
 			<span>Use your email for registration.</span>
-			<input type="text" placeholder="Username" />
-			<input type="email" placeholder="Email" />
-			<input type="password" placeholder="Password" />
-			<button @click="createAccount">Sign Up</button>
+			<input type="username" placeholder="Username" ref="username" />
+			<input type="emailSign" placeholder="Email" ref="emailSign" />
+			<input type="passwordSign" placeholder="Password" ref="passwordSign" />
+			<button @click.prevent.self @click="createAccount">Sign Up</button>
 		</form>
 	</div>
 	<div class="form-container sign-in-container">
 		<form action="#">
 			<h1>Sign in</h1>
 			<span>Use your account to sign in.</span>
-			<input type="email" placeholder="Email" />
-			<input type="password" placeholder="Password" />
+			<input type="emailLog" placeholder="Email"  ref="emailLog"/>
+			<input type="passwordLog" placeholder="Password" ref="passwordLog"/>
 			<a href="#">Forgot your password?</a>
-			<button @click="login">Sign In</button>
+			<button @click.prevent.self @click="login">Sign In</button>
 		</form>
 	</div>
 	<div class="overlay-container">
@@ -46,16 +46,17 @@ import { onMounted } from 'vue';
 import { ref } from "vue";
 import { supabase } from "../lib/supabaseClient.ts";
 
-let email = ref("");
-let password = ref("");
+let username = ref("").value;
+let emailSign = ref("").value;
+let passwordSign = ref("").value;
+let emailLog = ref("").value;
+let passwordLog = ref("").value;
 
 async function createAccount(){
+	console.log(emailSign.value,passwordSign.value)
     const {data, error} = await supabase.auth.signUp({
-      email: email.value,
-      password: password.value,
-      data: {
-        confirmation_sent_at: Date.now(),
-    },
+      email: emailSign.value,
+      password: passwordSign.value,
     })
     if (error){
       console.log(error)
@@ -71,8 +72,8 @@ async function seeCurrentUser(){
 
 async function login(){
     const {data, error} = await supabase.auth.signInWithPassword({
-      email: email.value,
-      password: password.value
+      email: emailLog.value,
+      password: passwordLog.value,
     }) 
     if (error) {
       console.log(error)
