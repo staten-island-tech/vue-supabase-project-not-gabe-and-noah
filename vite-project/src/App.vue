@@ -15,8 +15,7 @@ let ScreenHeight = ref(screen.height * .95)
 
   <header>
     <NavBar v-if="1"></NavBar>
-    <SideBar></SideBar>
-    <Clock></Clock>
+    <SideBar v-if="0"></SideBar>
     <div id="bottom">
         <Login v-if="scene == 3"></Login>
       </div>

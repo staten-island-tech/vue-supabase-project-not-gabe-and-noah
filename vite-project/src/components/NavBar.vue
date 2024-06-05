@@ -1,18 +1,28 @@
 <template>
-  <div id="barBody">
-<p>test</p>
+  <div class="barBody" :id="store.auth.name.toString()">
+<BigFlockingClock></BigFlockingClock>
   </div>
 </template>
 
 <script setup lang="ts">
-
+import { info } from "@/stores/store"
+const store = info(); 
+import BigFlockingClock from './BigFlockingClock.vue';
+console.log(store.auth.name);
 </script>
 
 <style scoped>
-#barBody{
+#false{
+  width: 100%;
+}
+
+#true{
+  width: calc(85% - 2px);
+}
+
+.barBody{
   border:1px solid #e5e5e5;
   background-color: aqua;
-  width: calc(85% - 2px);
   top: 0px;
   right: 0px;
   height: 5%;

@@ -45,6 +45,8 @@ import wave from '@/components/wave.vue'
 import { onMounted } from 'vue';
 import { ref } from "vue";
 import { supabase } from "../lib/supabaseClient.ts";
+import { info } from "@/stores/store"
+const store = info(); 
 
 let username = ref("").value;
 let emailSign = ref("").value;
@@ -79,6 +81,8 @@ async function login(){
       console.log(error)
     } else {
       console.log(data)
+	  console.log("wrk")
+	  store.auth.name = true
     }
   }
 

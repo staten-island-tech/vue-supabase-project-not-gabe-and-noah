@@ -28,11 +28,3 @@ onUnmounted(() => {
 });
 </script>
 
-<style scoped>
-p {
-  font-size: 2em;
-  font-family: 'Courier New', Courier, monospace;
-  text-align: center;
-  margin-top: 75px;
-}
-</style>
