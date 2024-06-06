@@ -41,13 +41,14 @@
 <script setup lang="ts">
 
 import wave from '@/components/wave.vue'
-
+import { useRoute, useRouter } from 'vue-router'
 import { onMounted } from 'vue';
 import { ref } from "vue";
 import { supabase } from "../lib/supabaseClient.ts";
 import { info } from "@/stores/store"
 const store = info(); 
-
+const router = useRouter()
+const route = useRoute()
 let username = ref("").value;
 let emailSign = ref("").value;
 let passwordSign = ref("").value;
@@ -83,6 +84,7 @@ async function login(){
       console.log(data)
 	  console.log("wrk")
 	  store.auth.name = true
+	  router.replace({ path: '/about' })
     }
   }
 
@@ -201,7 +203,7 @@ input {
 	padding: 12px 15px;
 	margin: 8px 0;
 	width: 100%;
-}
+}   
 
 .container {
 	border-radius: 10px;

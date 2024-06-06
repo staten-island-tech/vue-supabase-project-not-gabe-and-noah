@@ -8,7 +8,6 @@
 import { info } from "@/stores/store"
 const store = info(); 
 import BigFlockingClock from './BigFlockingClock.vue';
-console.log(store.auth.name);
 </script>
 
 <style scoped>
@@ -21,6 +20,8 @@ console.log(store.auth.name);
 }
 
 .barBody{
+  transition: 2s;
+  translate: (0%,100%);
   border:1px solid #e5e5e5;
   background-color: aqua;
   top: 0px;

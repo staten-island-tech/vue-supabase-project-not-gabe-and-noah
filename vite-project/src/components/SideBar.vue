@@ -120,6 +120,7 @@ overflow:visible;
 }
 
 .main-menu {
+    animation: fade-in 1s;
 background:#212121;
 border-right:1px solid #e5e5e5;
 position:absolute;
@@ -214,6 +215,16 @@ padding:0;
 color:#fff;
 background-color:#000000;
 }
+
+
+@keyframes fade-in {
+  0%   {opacity: 0;
+        transform: translateY(100%);}
+  100% {opacity: 1;
+        transform: translateY(0px);}
+}
+
+
 .area {
 float: left;
 background: #e2e2e2;
