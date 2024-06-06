@@ -1,5 +1,5 @@
 <template>
-  <div class="barBody" :id="store.auth.name.toString()">
+  <div class="barBody" :id="store.auth.log.toString()">
     <div class="username">Sign In</div>
     <div v-if="store.auth.errorMessage" class="error-message">{{ store.auth.errorMessage }}</div>
     <div class="clock"><BigFlockingClock /></div>

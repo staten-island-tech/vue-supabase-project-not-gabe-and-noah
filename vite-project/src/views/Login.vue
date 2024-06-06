@@ -8,7 +8,7 @@
 			<span>Use your email for registration.</span>
 			<input type="username" placeholder="Username" ref="username" />
 			<input type="emailSign" placeholder="Email" ref="emailSign" />
-			<input type="passwordSign" placeholder="Password" ref="passwordSign" />
+			<input type="password" placeholder="Password" ref="passwordSign" />
 			<button @click.prevent.self @click="createAccount">Sign Up</button>
 		</form>
 	</div>
@@ -17,7 +17,7 @@
 			<h1>Sign in</h1>
 			<span>Use your account to sign in.</span>
 			<input type="emailLog" placeholder="Email"  ref="emailLog"/>
-			<input type="passwordLog" placeholder="Password" ref="passwordLog"/>
+			<input type="password" placeholder="Password" ref="passwordLog"/>
 			<a href="#">Forgot your password?</a>
 			<button @click.prevent.self @click="login">Sign In</button>
 		</form>

@@ -1,13 +1,19 @@
 <template>
   <div class="holder">
-    <div id="cal">
+    <div class="controls">
+      <div id="buttons">
+      
+      
+    </div>
+      <h1>{{ currentMonthName }} {{ currentYear }}</h1>
+    </div>
+    <div id="calCon">
+      <img class="calButt" id="calLeft" @click="prevMonth" src="https://icon-library.com/images/camping-icon-png/camping-icon-png-23.jpg">
+        <div id="cal">
       <blankBox v-for="day in daysOfWeek" :day="day" :key="day"></blankBox>
       <calBox v-for="(date, index) in boxes" :date="date" :key="index" @click="openModal(date)"></calBox>
     </div>
-    <div class="controls">
-      <button @click="prevMonth">Previous</button>
-      <button @click="nextMonth">Next</button>
-      <p>{{ currentMonthName }} {{ currentYear }}</p>
+    <img class="calButt" id="calRight" @click="nextMonth" src="https://icon-library.com/images/camping-icon-png/camping-icon-png-23.jpg">
     </div>
   </div>
 </template>
@@ -28,7 +34,7 @@ const daysInMonth = computed(() => {
   return new Date(currentYear.value, currentMonth.value + 1, 0).getDate();
 });
 
-const firstDay = computed(() => {
+const firstDay = computed (() => {
   return new Date(currentYear.value, currentMonth.value, 1).getDay();
 });
 
@@ -43,6 +49,7 @@ const boxes = computed(() => {
   return days;
 });
 
+console.log(boxes)
 function nextMonth() {
   currentDate.value.setMonth(currentMonth.value + 1);
   currentDate.value = new Date(currentDate.value);
@@ -55,13 +62,46 @@ function prevMonth() {
 </script>
 
 <style>
+
+#calCon{
+  width: 100%;
+  background-color: rgba(0,0,0,1);
+  display: flex
+}
+
+#calRight{
+  transform: rotate(90deg)
+}
+
+#calLeft{
+  transform: rotate(270deg)
+}
+.calButt{
+  align-self: center;
+  filter: invert(1);
+  width: 10%;
+  height: 10%;
+  transition: .5s;
+}
+
+.calButt:hover{
+  filter: invert(50%);
+}
+
 #cal {
   background-color: black;
   height: auto;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  grid-template-rows: .5fr repeat(5, 1fr);
-  width: 100%;
+  grid-template-rows: .5fr repeat(6, 1fr);
+  width: calc(80% - 20px);
+  height: 700px;
+  padding: 10px;
+  padding-top: 0px;
+  max-height: 100%;
+  overflow: auto;
+  column-gap: 0px;
+  row-gap: 0px;
 }
 
 .holder {
@@ -72,14 +112,18 @@ function prevMonth() {
   min-height: 100%;
   width: 100%;
   background-color: goldenrod;
+  overflow: auto;
+  max-height: 100%;
 }
 
 .controls {
+  padding: 1%;
   display: flex;
+  align-items: center;
+  flex-direction: column-reverse;
+  width: 70%;
   justify-content: center;
   align-items: center;
-  gap: 10px;
-  margin-top: 20px;
 }
 
 button {

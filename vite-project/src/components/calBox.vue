@@ -56,20 +56,17 @@
 <style scoped>
   .box {
     background-color: azure;
-    border: 2px black solid;
+    border: 1px gray solid;
     color: blue;
     position: relative;
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
-    height: 100px;
+    height: 100%;
     width: 100%;
     box-sizing: border-box;
   }
   
-  .box p {
-    margin: 5px;
-  }
   
   .clickable:hover {
     transition: 0.75s;
