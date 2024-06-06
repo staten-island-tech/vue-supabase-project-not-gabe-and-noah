@@ -27,6 +27,7 @@ import BigFlockingClock from './BigFlockingClock.vue';
 
 .barBody{
   border:1px solid #e5e5e5;
+  transition: 1.5s;
   background-color: aqua;
   top: 0px;
   right: 0px;

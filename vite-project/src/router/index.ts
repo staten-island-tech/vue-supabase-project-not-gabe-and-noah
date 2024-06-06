@@ -10,8 +10,8 @@ const router = createRouter({
       component: Login,
     },
     {
-      path: '/about',
-      name: 'about',
+      path: '/calendar',
+      name: 'calendar',
       component: () => import('../views/Main.vue')
     }
   ]

@@ -84,7 +84,7 @@ async function login(){
       console.log(data)
 	  console.log("wrk")
 	  store.auth.name = true
-	  router.replace({ path: '/about' })
+	  router.replace({ path: '/calendar' })
     }
   }
 
