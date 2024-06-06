@@ -8,6 +8,8 @@ let scene = 3
 import { mapState } from 'pinia'
 import { ref } from 'vue'
 let ScreenHeight = ref(screen.height * .95)
+import { info } from "@/stores/store"
+const store = info(); 
 </script>
 
 <template>
@@ -15,9 +17,9 @@ let ScreenHeight = ref(screen.height * .95)
 
   <header>
     <NavBar v-if="1"></NavBar>
-    <SideBar v-if="0"></SideBar>
-    <div id="bottom">
-        <Login v-if="scene == 3"></Login>
+    <SideBar v-if="store.auth.name"></SideBar>
+    <div id="bottom" v-bind:style="{ width: store.auth.name ? '85%' : '100%' }">
+        <RouterView></RouterView>
       </div>
   </header>
 </template>
@@ -29,7 +31,6 @@ let ScreenHeight = ref(screen.height * .95)
   bottom: 0px;
   right: 0px;
   height: calc(100% - 5%);
-  width: calc(100%);
 }
 
 </style>

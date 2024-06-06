@@ -5,7 +5,7 @@ export const info = defineStore('barView', () => {
   const auth = ref({
     name: false,
     email: false,
-
+    width: 85,
   })
 
   return { auth }
