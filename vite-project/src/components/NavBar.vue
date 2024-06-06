@@ -1,13 +1,8 @@
 <template>
-  <div class="barBody" :id="store.auth.log.toString()">
-    <div class="username">{{ store.auth.name }}</div>
+  <div class="barBody" :id="store.auth.name.toString()">
+    <div class="username">Sign In</div>
+    <div v-if="store.auth.errorMessage" class="error-message">{{ store.auth.errorMessage }}</div>
     <div class="clock"><BigFlockingClock /></div>
-    <div v-if="store.auth.log == true" id="loggedIn" >
-      <BigFlockingClock></BigFlockingClock>
-    </div>
-    <div v-else id="loggedOut" >
-<p>logged out</p>
-    </div>
   </div>
 </template>
 
@@ -49,6 +44,13 @@ import BigFlockingClock from './BigFlockingClock.vue';
 
 .username, .clock {
   font-size: 1.2em;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.error-message {
+  font-size: 1em;
+  color: #ff4b2b;
+  text-align: center;
   font-family: 'Montserrat', sans-serif;
 }
 </style>
