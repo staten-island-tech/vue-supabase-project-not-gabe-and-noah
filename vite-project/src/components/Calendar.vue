@@ -11,7 +11,7 @@
       <img class="calButt" id="calLeft" @click="prevMonth" src="https://icon-library.com/images/camping-icon-png/camping-icon-png-23.jpg">
         <div id="cal">
       <blankBox v-for="day in daysOfWeek" :day="day" :key="day"></blankBox>
-      <calBox v-for="(date, index) in boxes" :date="date" :key="index" @click="openModal(date)"></calBox>
+      <calBox v-for="(date, index) in boxes" :date="date" :key="index"></calBox>
     </div>
     <img class="calButt" id="calRight" @click="nextMonth" src="https://icon-library.com/images/camping-icon-png/camping-icon-png-23.jpg">
     </div>
@@ -140,6 +140,11 @@ button:hover {
 
 p {
   font-size: 1.2em;
+  font-family: 'Montserrat', sans-serif;
+}
+
+h1 {
+  font-size: 2em;
   font-family: 'Montserrat', sans-serif;
 }
 
