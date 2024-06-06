@@ -1,49 +1,24 @@
 <template>
-  <div :class="['box', { 'clickable': isClickable }]" @click="openModal">
+    <div @click="$emit('popUp', [store.date.month, parseInt(props.date), store.date.year ])" :class="['box', { 'hoverable': isHoverable }]">
       <p>{{ props.date }}</p>
-      <div v-for="event in events" :key="event.id" class="event">{{ event.text }}</div>
-      <div v-if="modalOpen" class="modal" @click.stop>
-          <div class="modal-content">
-              <span class="close" @click="closeModal">&times;</span>
-              <h2>Create Event</h2>
-              <form @submit.prevent="handleCreateEvent">
-                <div class="form-group">
-                      <label for="event">Event Title:</label>
-                      <input type="text" id="event" v-model="eventText" required @click.stop>
-                  </div>
-                  <div class="form-group">
-                      <label for="urgency">Urgency:</label>
-                      <select id="urgency" v-model="urgency">
-                          <option value="Low">Low</option>
-                          <option value="Medium">Medium</option>
-                          <option value="High">High</option>
-                      </select>
-                  </div>
-                  <div class="form-group">
-                      <label for="date">Date:</label>
-                      <input type="date" id="date" v-model="date" required>
-                  </div>
-                  <div class="form-group">
-                      <label for="time">Time:</label>
-                      <input type="time" id="time" v-model="time" required>
-                  </div>
-                  <button type="submit">Save</button>
-              </form>
-          </div>
-      </div>
-  </div>
-</template>
+    </div>
+  </template>
   
-  <script setup>
-  import { defineProps, computed, ref } from 'vue';
-  
+  <script setup lang="ts">
+  import { defineProps, computed } from 'vue';
+  import { info } from "@/stores/store"
+  import { dateInfo } from "@/stores/date"
+const store = dateInfo(); 
+
+
   const props = defineProps({
-      date: [Number, String]
+    date: [Number, String]
   });
   
-  const isClickable = computed(() => {
-      const date = parseInt(props.date);
-      return (date > 0);
+  const isHoverable = computed(() => {
+    const date = parseInt(props.date);
+    console.log(date)
+    return (date > 0);
   });
   
 const modalOpen = ref(false);
@@ -88,7 +63,6 @@ const events = ref([]);
   <style scoped>
   @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
   
-
   .box {
       background-color: azure;
       border: 1px gray solid;
