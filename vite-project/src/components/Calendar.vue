@@ -156,9 +156,4 @@ p {
   font-family: 'Montserrat', sans-serif;
 }
 
-h1 {
-  font-size: 2em;
-  font-family: 'Montserrat', sans-serif;
-}
-
 </style>

@@ -3,6 +3,7 @@
       <p>{{ props.date }}</p>
     </div>
   </template>
+
   
   <script setup lang="ts">
   import { defineProps, computed } from 'vue';
@@ -21,13 +22,9 @@ const store = dateInfo();
     return (date > 0);
   });
   
-const modalOpen = ref(false);
-const eventText = ref('');
-const urgency = ref('Low');
-const event = ref('');
-const date = ref('');
-const time = ref('');
-const events = ref([]);
+  const modalOpen = ref(false);
+  const eventText = ref('');
+  const events = ref([]);
   
   function openModal() {
     modalOpen.value = true;
@@ -40,123 +37,80 @@ const events = ref([]);
   function handleCreateEvent() {
     const text = eventText.value.trim();
     if (text) {
-        const newEvent = {
-            id: Date.now(),
-            text,
-            urgency: urgency.value,
-            event: event.value,
-            date: date.value,
-            time: time.value
-        };
-        console.log(urgency.value, event.value, date.value, time.value)
-        events.value.push(newEvent);
-        eventText.value = '';
-        urgency.value = 'Low';
-        event.value = '';
-        date.value = '';
-        time.value = '';
+      const date = props.date.toString();
+      events.value.push({ id: Date.now(), text });
+      eventText.value = '';
     }
     closeModal();
-}
+  }
   </script>
   
   <style scoped>
   @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
-  
   .box {
-      background-color: azure;
-      border: 1px gray solid;
-      color: blue;
-      position: relative;
-      display: flex;
-      justify-content: flex-start;
-      align-items: flex-start;
-      height: 100%;
-      width: 100%;
-      box-sizing: border-box;
-  }
-
-  .clickable:hover {
-      transition: 0.75s;
-      background-color: gold;
-  }
-
-  .event {
-      margin-bottom: 5px;
-      white-space: pre-line;
-  }
-  .modal {
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
+    background-color: azure;
+    border: 1px gray solid;
+    color: blue;
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
     height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  
+  .clickable:hover {
+    transition: 0.75s;
+    background-color: gold;
   }
 
-  .modal-content {
+.event{
+    margin-bottom: 5px;
+    white-space: pre-line;
+}
+
+.modal {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+  
+.modal-content {
     background-color: #fefefe;
-    font-family: 'Montserrat', sans-serif;
-    margin: 10% auto;
+    margin: auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 80%; /* Adjust width as needed */
+    width: 50%; /* Adjust width as needed */
     max-width: 400px; /* Set a maximum width for better visibility */
-    border-radius: 8px; /* Add border radius for a rounded look */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
-
+  
   .close {
     color: #aaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
-    cursor: pointer;
   }
-
+  
   .close:hover,
   .close:focus {
     color: black;
     text-decoration: none;
-  }
-
-  .form-group {
-    margin-bottom: 15px;
-  }
-
-  label {
-    font-weight: bold;
-    display: block;
-    margin-bottom: 5px;
-  }
-
-  input[type="text"],
-  input[type="date"],
-  input[type="time"],
-  select {
-    font-family: 'Montserrat', sans-serif;
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-    font-size: 16px;
-    margin-top: 5px;
-  }
-
-  button[type="submit"] {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
     cursor: pointer;
-    font-size: 16px;
   }
-
+  
   button[type="submit"]:hover {
     background-color: #45a049;
   }
 </style>
+
