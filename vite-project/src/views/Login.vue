@@ -82,6 +82,7 @@ async function login(){
     }) 
     if (error) {
       console.log(error)
+	  store.auth.errorMessage = error.message;
     } else {
       console.log(data)
 	  console.log("wrk")
