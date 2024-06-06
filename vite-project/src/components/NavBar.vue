@@ -1,6 +1,7 @@
 <template>
   <div class="barBody" :id="store.auth.name.toString()">
-
+    <div class="username">Username goes here.</div>
+    <div class="clock"><BigFlockingClock /></div>
     <div v-if="store.auth.name == true" id="loggedIn" >
       <BigFlockingClock></BigFlockingClock>
     </div>
@@ -26,6 +27,10 @@ import BigFlockingClock from './BigFlockingClock.vue';
 }
 
 .barBody{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
   border:1px solid #e5e5e5;
   transition: 1.5s;
   background-color: aqua;
@@ -33,6 +38,14 @@ import BigFlockingClock from './BigFlockingClock.vue';
   right: 0px;
   height: 5%;
   position: absolute;
-  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+  transition: transform 2s;
+  transform: translateY(0);
+}
+
+.username, .clock {
+  font-size: 1.2em;
+  font-family: 'Montserrat', sans-serif;
 }
 </style>

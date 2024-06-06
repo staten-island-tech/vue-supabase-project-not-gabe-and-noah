@@ -2,7 +2,6 @@
 import { RouterLink, RouterView } from 'vue-router'
 import NavBar from '@/components/NavBar.vue';
 import SideBar from '@/components/SideBar.vue';
-import Login from '@/components/Login.vue';
 import Clock from '@/components/BigFlockingClock.vue'
 let scene = 3
 import { mapState } from 'pinia'
