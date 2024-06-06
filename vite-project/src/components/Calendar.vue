@@ -2,7 +2,7 @@
   <div class="holder">
     <div id="cal">
       <blankBox v-for="day in daysOfWeek" :day="day" :key="day"></blankBox>
-      <calBox v-for="(date, index) in boxes" :date="date" :key="index"></calBox>
+      <calBox v-for="(date, index) in boxes" :date="date" :key="index" @click="openModal(date)"></calBox>
     </div>
     <div class="controls">
       <button @click="prevMonth">Previous</button>
@@ -11,13 +11,13 @@
     </div>
   </div>
 </template>
-  
+
 <script setup lang="ts">
 import calBox from '@/components/calBox.vue'
 import blankBox from './blankBox.vue';
 import { ref, computed } from 'vue';
 
-const daysOfWeek = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 const currentDate = ref(new Date());
 
 const currentYear = computed(() => currentDate.value.getFullYear());
@@ -28,20 +28,20 @@ const daysInMonth = computed(() => {
   return new Date(currentYear.value, currentMonth.value + 1, 0).getDate();
 });
 
-const firstDay = computed (() => {
+const firstDay = computed(() => {
   return new Date(currentYear.value, currentMonth.value, 1).getDay();
-})
+});
 
 const boxes = computed(() => {
   const days = []
   for (let i = 1; i <= firstDay.value; i++) {
     days.push('');
   }
-  for (let i = 1; i <= daysInMonth.value; i++){
+  for (let i = 1; i <= daysInMonth.value; i++) {
     days.push(i.toString());
   }
   return days;
-})
+});
 
 function nextMonth() {
   currentDate.value.setMonth(currentMonth.value + 1);

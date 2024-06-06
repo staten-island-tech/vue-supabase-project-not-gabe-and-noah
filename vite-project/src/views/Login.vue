@@ -88,6 +88,7 @@ async function login(){
 	  console.log("wrk")
 	  store.auth.log = true
 	  store.auth.name = data.user.email
+    store.auth.errorMessage = "";
 	  router.replace({ path: '/calendar' })
     }
   }
