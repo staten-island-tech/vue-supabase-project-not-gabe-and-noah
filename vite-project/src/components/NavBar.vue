@@ -2,6 +2,12 @@
   <div class="barBody" :id="store.auth.name.toString()">
     <div class="username">Username goes here.</div>
     <div class="clock"><BigFlockingClock /></div>
+    <div v-if="store.auth.name == true" id="loggedIn" >
+      <BigFlockingClock></BigFlockingClock>
+    </div>
+    <div v-else id="loggedOut" >
+<p>logged out</p>
+    </div>
   </div>
 </template>
 
@@ -25,10 +31,10 @@ import BigFlockingClock from './BigFlockingClock.vue';
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  border: 1px solid #e5e5e5;
-  background-color: #fffafb;
-  top: 0;
-  right: 0;
+  border:1px solid #e5e5e5;
+  background-color: aqua;
+  top: 0px;
+  right: 0px;
   height: 5%;
   position: absolute;
   width: 100%;

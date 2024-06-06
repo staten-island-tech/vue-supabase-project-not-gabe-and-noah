@@ -1,23 +1,16 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
-  </div>
+<calendar></calendar>
 </template>
 
 <style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-}
+
 </style>
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { info } from "@/stores/store"
 import { useRouter } from 'vue-router'
+import calendar from "@/components/Calendar.vue"
 const router = useRouter()
 const store = info(); 
 
