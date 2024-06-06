@@ -1,16 +1,15 @@
 <template>
     <div>
         <div class="box">
-<p>{{ props.day }}</p>
-    </div>
+            <p>{{ props.day }}</p>
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
 const props = defineProps({
-        day: String,
-    })  
-
+    day: String,
+})  
 </script>
 
 <style scoped>
