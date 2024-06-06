@@ -1,6 +1,12 @@
 <template>
   <div class="barBody" :id="store.auth.name.toString()">
-<BigFlockingClock></BigFlockingClock>
+
+    <div v-if="store.auth.name == true" id="loggedIn" >
+      <BigFlockingClock></BigFlockingClock>
+    </div>
+    <div v-else id="loggedOut" >
+<p>logged out</p>
+    </div>
   </div>
 </template>
 
@@ -20,8 +26,6 @@ import BigFlockingClock from './BigFlockingClock.vue';
 }
 
 .barBody{
-  transition: 2s;
-  translate: (0%,100%);
   border:1px solid #e5e5e5;
   background-color: aqua;
   top: 0px;
