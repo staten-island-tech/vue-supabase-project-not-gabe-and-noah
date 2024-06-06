@@ -89,6 +89,7 @@ async function login(){
 	  store.auth.name = true
 	  store.auth.errorMessage = '';
 	  router.replace({ path: '/about' })
+	  router.replace({ path: '/calendar' })
     }
   }
 

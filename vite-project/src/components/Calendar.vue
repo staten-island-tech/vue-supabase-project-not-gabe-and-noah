@@ -1,6 +1,6 @@
 <template>
-    <div>
-<p>wilds</p>
+    <div id="background">
+        <p>test</p>
     </div>
 </template>
 
@@ -9,5 +9,9 @@
 </script>
 
 <style scoped>
-
+#background{
+    background-color: red;
+    height: 90%;
+    width: 105%;
+}
 </style>
