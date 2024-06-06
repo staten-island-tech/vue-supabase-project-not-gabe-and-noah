@@ -11,7 +11,7 @@
       <img class="calButt" id="calLeft" @click="prevMonth" src="https://icon-library.com/images/camping-icon-png/camping-icon-png-23.jpg">
         <div id="cal">
       <blankBox v-for="day in daysOfWeek" :day="day" :key="day"></blankBox>
-      <calBox v-for="(date, index) in boxes" :date="date" :key="index" @click="openModal(date)"></calBox>
+      <calBox v-for="(date, index) in boxes" :date="date" :key="index"></calBox>
     </div>
     <img class="calButt" id="calRight" @click="nextMonth" src="https://icon-library.com/images/camping-icon-png/camping-icon-png-23.jpg">
     </div>
@@ -22,14 +22,18 @@
 import calBox from '@/components/calBox.vue'
 import blankBox from './blankBox.vue';
 import { ref, computed } from 'vue';
+import { dateInfo } from "@/stores/date"
+const store = dateInfo(); 
 
 const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 const currentDate = ref(new Date());
 
-const currentYear = computed(() => currentDate.value.getFullYear());
-const currentMonth = computed(() => currentDate.value.getMonth());
+const currentYear = store.date.year =computed(() => currentDate.value.getFullYear());
+
+const currentMonth = store.date.month = computed(() => currentDate.value.getMonth());
 const currentMonthName = computed(() => currentDate.value.toLocaleString('default', { month: 'long' }));
 
+console.log(store.date.year)
 const daysInMonth = computed(() => {
   return new Date(currentYear.value, currentMonth.value + 1, 0).getDate();
 });
