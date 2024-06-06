@@ -1,10 +1,22 @@
 <template>
+  <Transition>
   <div class="about">
     <h1>This is an about page</h1>
   </div>
+  </Transition>
 </template>
 
 <style>
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+
 @media (min-width: 1024px) {
   .about {
     min-height: 100%;
