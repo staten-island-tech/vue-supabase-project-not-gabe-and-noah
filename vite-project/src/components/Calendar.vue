@@ -1,8 +1,7 @@
 <template>
     <div class="holder">
       <div id="cal">
-    <calBox></calBox>
-    <p>test</p>
+    <calBox v-for="i in 31"></calBox>
       </div>
     </div>
   </template>
@@ -10,8 +9,11 @@
   <style>
   
   #cal{
-    background-color: green;
-    height: 100%;
+    background-color: orangered;
+    height: 30%;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(5, 1fr);
     width: 100%;
   }
     .holder {
