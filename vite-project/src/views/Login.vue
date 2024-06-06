@@ -85,7 +85,8 @@ async function login(){
     } else {
       console.log(data)
 	  console.log("wrk")
-	  store.auth.name = true
+	  store.auth.log = true
+	  store.auth.name = data.user.email
 	  router.replace({ path: '/calendar' })
     }
   }

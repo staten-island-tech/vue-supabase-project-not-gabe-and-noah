@@ -1,8 +1,8 @@
 <template>
-  <div class="barBody" :id="store.auth.name.toString()">
-    <div class="username">Username goes here.</div>
+  <div class="barBody" :id="store.auth.log.toString()">
+    <div class="username">{{ store.auth.name }}</div>
     <div class="clock"><BigFlockingClock /></div>
-    <div v-if="store.auth.name == true" id="loggedIn" >
+    <div v-if="store.auth.log == true" id="loggedIn" >
       <BigFlockingClock></BigFlockingClock>
     </div>
     <div v-else id="loggedOut" >
@@ -14,6 +14,8 @@
 <script setup lang="ts">
 import { info } from "@/stores/store"
 const store = info(); 
+import { ref } from "vue";
+let name = ref(store.auth.name)
 import BigFlockingClock from './BigFlockingClock.vue';
 </script>
 
@@ -23,7 +25,7 @@ import BigFlockingClock from './BigFlockingClock.vue';
 }
 
 #true{
-  width: calc(85% - 2px);
+  width: calc(85%);
 }
 
 .barBody{
@@ -37,6 +39,7 @@ import BigFlockingClock from './BigFlockingClock.vue';
   top: 0px;
   right: 0px;
   height: 5%;
+  margin: 0px;
   position: absolute;
   width: 100%;
   box-sizing: border-box;

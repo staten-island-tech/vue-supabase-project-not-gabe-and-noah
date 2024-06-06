@@ -3,8 +3,9 @@ import { defineStore } from 'pinia'
 
 export const info = defineStore('barView', () => {
   const auth = ref({
-    name: false,
-    email: false,
+    log: false,
+    email: "",
+    name: "test",
     width: 85,
   })
 

@@ -15,9 +15,9 @@ const router = useRouter()
 const store = info(); 
 
 onMounted(() => {
-  if(!store.auth.name){
+  if(!store.auth.log){
     router.replace({ path: '/' })
-  }
+  } 
   else{
     console.log(store.auth)
   }
