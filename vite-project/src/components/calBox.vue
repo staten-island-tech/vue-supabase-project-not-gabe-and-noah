@@ -1,5 +1,5 @@
 <template>
-    <div @click="showBox" :class="['box', { 'hoverable': isHoverable }]">
+    <div @click="$emit('popUp', [store.date.month, parseInt(props.date), store.date.year ])" :class="['box', { 'hoverable': isHoverable }]">
       <p>{{ props.date }}</p>
     </div>
   </template>
@@ -9,16 +9,14 @@
   import { info } from "@/stores/store"
   import { dateInfo } from "@/stores/date"
 const store = dateInfo(); 
-function showBox(){
-  console.log(store.date)
-}
+
 
   const props = defineProps({
     date: [Number, String]
   });
   
   const isHoverable = computed(() => {
-    const date = parseInt(props.date.month);
+    const date = parseInt(props.date);
     console.log(date)
     return (date > 0);
   });
