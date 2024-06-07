@@ -2,7 +2,7 @@
   <body><div class="area"></div><nav class="main-menu">
             <ul>
                 <li>
-                    <a href="https://jbfarrow.com">
+                    <a href="#">
                         <i class="fa fa-home fa-2x"></i>
                         <span class="nav-text">
                            Community Dashboard

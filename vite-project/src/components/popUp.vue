@@ -24,7 +24,7 @@
             <label for="time">Time:</label>
             <input type="time" id="time" v-model="eventTime" required>
           </div>
-          <button type="submit">Save</button>
+          <button type="submit" @click="test">Save</button>
         </form>
       </div>
     </div>
@@ -33,36 +33,71 @@
   <script setup lang="ts">
   import { ref, defineProps, PropType } from 'vue';
   import { dateInfo } from "@/stores/date";
+import { supabase } from '@/lib/supabaseClient';
   const store = dateInfo();
   
   const props = defineProps({
     date: Array as PropType<[number, number, number]>,
   });
   
-  const eventTitle = ref('');
-  const urgency = ref('Low');
-  const eventDate = ref('');
-  const eventTime = ref('');
-  
+  let eventTitle = ref('');
+  let urgency = ref('Low');
+  let eventDate = ref('');
+  let eventTime = ref('');
+
+  async function test() {
+ let newEvent = await supabase
+  .from('event')
+  .insert([
+    { eventName: eventTitle.value, dateDue: urgency.value, eventType: eventDate.value, eventUrgency: eventTime.value, },
+  ])
+  let recentEvent = await supabase
+  .from('event')
+  .select("*")
+  .eq('eventName', eventTitle.value)
+  recentEvent = recentEvent.data[recentEvent.data.length-1].id
+  const localUser = await supabase.auth.getUser();
+  let user = await supabase
+  .from('profiles')
+  .select("*")
+  .eq('id', localUser.data.user.id)
+  console.log(user.data[0].events)
+  if(user.data[0].events == null){
+    let updatedArray = await supabase
+  .from('profiles')
+  .update({ events: [recentEvent] })
+  .eq('id', localUser.data.user.id)
+  .select() 
+  } else{
+    let newArray = [...user.data[0].events, recentEvent.toString()]
+    console.log(user.data[0].events)
+    console.log(recentEvent)
+    console.log(newArray)
+    let updatedArray = await supabase
+  .from('profiles')
+  .update({ events: newArray })
+  .eq('id', localUser.data.user.id)}
+}
+
   function submitForm() {
-    const eventDateArray = eventDate.value.split('-');
+    const eventDateArray = eventDate.split('-');
     const year = parseInt(eventDateArray[0], 10);
     const month = parseInt(eventDateArray[1], 10) - 1;
     const day = parseInt(eventDateArray[2], 10);
 
     const eventObject = {
-      title: eventTitle.value,
-      urgency: urgency.value,
+      title: eventTitle,
+      urgency: urgency,
       date: new Date(year, month, day),
-      time: eventTime.value,
+      time: eventTime,
     };
   
     console.log(eventObject);
     store.date.popUp = false;
-    eventTitle.value = ''
-    urgency.value = ''
-    eventDate.value = ''
-    eventTime.value = ''
+    eventTitle = ''
+    urgency = ''
+    eventDate = ''
+    eventTime = ''
   }
   </script>
 

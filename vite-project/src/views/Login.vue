@@ -57,23 +57,49 @@ let passwordSign = ref("").value;
 let emailLog = ref("").value;
 let passwordLog = ref("").value;
 
+console.log(supabase)
 async function createAccount(){
+  let x = await supabase.auth.getUser()
+  console.log(x)
+  //const { data, error } = await supabase
+  //.from('profiles')
+  //.update({ username: 'otherValue' })
+  //.is(id, 1)
+
 	console.log(emailSign.value,passwordSign.value)
     const {data, error} = await supabase.auth.signUp({
       email: emailSign.value,
       password: passwordSign.value,
     })
+
     if (error){
       console.log(error)
     } else{
+      const {data, error} = await supabase.auth.signInWithPassword({
+      email: emailSign.value,
+      password: passwordSign.value,
+    }) 
+      if (error) {
+      console.log(error)
+	    store.auth.errorMessage = error.message;
+      } else {
       console.log(data)
+	  console.log("wrk")
+	  store.auth.log = true
+	  store.auth.name = data.user.email
+    store.auth.errorMessage = "";
+    console.log(username.value)
+  const updateUser = await supabase
+  .from('profiles')
+  .update({ username: username.value})
+  .eq('id', data.user.id)
+  console.log(updateUser)
+  router.replace({ path: '/calendar' })
+
+    }
     }
   }
 
-async function seeCurrentUser(){
-    const localUser = await supabase.auth.getSession();
-    console.log(localUser)
-  }
 
 async function login(){
     const {data, error} = await supabase.auth.signInWithPassword({
