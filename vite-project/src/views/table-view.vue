@@ -18,7 +18,6 @@
     import { supabase } from "../lib/supabaseClient.ts";
     import events from "@/components/events.vue";
     import sharedEvents from "../components/sharedEvents.vue";
-
     const b = ref([]);
 
     async function getUser(){
@@ -32,9 +31,9 @@
     c.forEach(async (eventId) => {
     let event = await supabase
     .from('event')
-    .select("*")
+    .select("*") 
     .eq('id', Number(eventId))
-    b.value.push({eventTitle:event.data[0].eventName, date: event.data[0].dateDue, time:event.data[0].eventType, urgency: event.data[0].eventUrgency}) 
+     b.value = [...b.value,{eventTitle:event.data[0].eventName, date: event.data[0].dateDue, time:event.data[0].eventType, urgency: event.data[0].eventUrgency}]
 });
     console.log(b.value)
     }

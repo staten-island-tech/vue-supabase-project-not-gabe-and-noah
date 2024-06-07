@@ -22,15 +22,14 @@
 <script setup lang="ts">
 import { defineProps, ref } from 'vue';
 import { supabase } from '@/lib/supabaseClient';
+const props = defineProps({
+  eventTitle: String,
+  urgency: String,
+  time: String,
+  date: String,
+})  
+console.log(props)
 
-interface Props {
-  eventTitle: string;
-  urgency: string;
-  time: string;
-  date: string;
-}
-
-const props = defineProps<Props>();
 const showPopup = ref(false);
 const username = ref('');
 

@@ -1,5 +1,5 @@
 <template>
-    <div @click="store.date.popUp = true;   $emit('popUp', [store.date.month, parseInt(props.date), store.date.year ])" :class="['box', { 'hoverable': isHoverable }]">
+    <div @click="store.date.popUp = true; $emit('popUp', [store.date.month, parseInt(props.date), store.date.year ])" :class="['box', { 'hoverable': isHoverable }]">
       <p>{{ props.date }}</p>
     </div>
   </template>
