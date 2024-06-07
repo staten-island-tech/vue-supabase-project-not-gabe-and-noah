@@ -1,10 +1,12 @@
 <template>
     <div class="container">
+       <div v-if="a==true"><div v-for="events in b">
         <events></events>
-        <sharedEvents></sharedEvents>
+       </div>        
+</div> 
     </div>
 </template>
-    
+     
     <style>
     
     </style>
@@ -20,22 +22,23 @@
     {let x = await supabase.auth.getUser()
         console.log(x.data.user.id)
     let theThingy = await supabase
-    .from('profiles')
+    .from('profiles') 
     .select("*")
     .eq('id', x.data.user.id)
+    let a = false
     let b = []
-    theThingy.data[0].events.forEach(async (eventId) => {
+    let c =  theThingy.data[0].events
+    c.forEach(async (eventId) => {
     let event = await supabase
     .from('event')
     .select("*")
     .eq('id', Number(eventId))
-    b.push(event) 
-    console.log(b)
-    });
+    b.push({eventName:event.data[0].eventName,dateDue: event.data[0].dateDue, eventType:event.data[0].eventType, eventUrgency: event.data[0].eventUrgency}) 
+    a = true;
+});
     }
     getUser()
     </script>
-
 <style scoped>
 
 .container {
