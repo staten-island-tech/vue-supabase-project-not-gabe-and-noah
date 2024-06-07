@@ -4,6 +4,7 @@
     <div class="links-container" v-if="store.auth.log">
       <router-link class="routerLink" to="/table-view">Table View</router-link>
       <router-link class="routerLink" to="/invite">Invite Thing</router-link>
+      <router-link class="routerLink" to="/calendar">Main Calendar</router-link>
     </div>
     <div v-if="store.auth.errorMessage" class="error-message">{{ store.auth.errorMessage }}</div>
     <div class="clock"><BigFlockingClock /></div>

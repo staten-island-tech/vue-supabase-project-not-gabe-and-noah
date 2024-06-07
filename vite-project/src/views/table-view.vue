@@ -1,10 +1,7 @@
 <template>
-    <div>
+    <div class="container">
         <events></events>
         <sharedEvents></sharedEvents>
-    </div>
-    <div>
-
     </div>
 </template>
     
@@ -38,3 +35,16 @@
     }
     getUser()
     </script>
+
+<style scoped>
+
+.container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: teal;
+}
+
+</style>

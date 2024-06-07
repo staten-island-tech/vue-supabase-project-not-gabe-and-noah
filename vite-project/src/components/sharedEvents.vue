@@ -40,7 +40,12 @@
   </script>
   
   <style scoped>
+  html, body{
+    background-color:teal;
+  }
+
   .event-display {
+    background-color: #131515;
     max-width: 400px;
     margin: auto;
     padding: 20px;
@@ -56,6 +61,7 @@
   
   .event-display p {
     margin: 10px 0;
+    color: #ccc;
   }
   
   .event-display p strong {
