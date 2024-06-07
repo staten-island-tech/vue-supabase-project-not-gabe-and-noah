@@ -1,6 +1,6 @@
 <template>
   <div class="holder">
-    <popUpBox :date="selectedDate"></popUpBox>
+    <popUpBox v-if="showBox" :date="selectedDate"></popUpBox>
     <div class="controls">
       <div id="buttons">
       
@@ -30,7 +30,7 @@ const store = dateInfo();
 let showBox = ref(false)
 const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 const currentDate = ref(new Date());
-let selectedDate = ref([0,1,1970])
+let selectedDate = ref(null)
 const currentYear = store.date.year =computed(() => currentDate.value.getFullYear());
 
 const currentMonth = store.date.month = computed(() => currentDate.value.getMonth());
@@ -56,13 +56,13 @@ const boxes = computed(() => {
   return days;
 });
 
-function popUp(date){
-  if(date[1]){
-    selectedDate.value = date
-    showBox.value = true
+function popUp(date) {
+  if (Array.isArray(date) && date.length === 3 && !isNaN(date[0]) && !isNaN(date[1]) && !isNaN(date[2])) {
+    selectedDate.value = date;
+    showBox.value = true;
+  }
 }
 
-}
 function nextMonth() {
   currentDate.value.setMonth(currentMonth.value + 1);
   currentDate.value = new Date(currentDate.value);
@@ -76,45 +76,48 @@ function prevMonth() {
 
 <style>
 
-#calCon{
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+#calCon {
   width: 100%;
-  background-color: rgba(0,0,0,1);
-  display: flex
+  background-color: #339989;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
 }
 
-#calRight{
-  transform: rotate(90deg)
-}
-
-#calLeft{
-  transform: rotate(270deg)
-}
-.calButt{
-  align-self: center;
+#calRight, #calLeft {
+  transform: rotate(90deg);
+  width: 5%;
+  height: 5%;
   filter: invert(1);
-  width: 10%;
-  height: 10%;
-  transition: .5s;
+  cursor: pointer;
+  transition: transform 0.3s ease;
 }
 
-.calButt:hover{
+#calLeft {
+  transform: rotate(270deg);
+}
+
+.calButt:hover {
   filter: invert(50%);
 }
 
 #cal {
-  background-color: black;
-  height: auto;
+  background-color: #fffafb;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  grid-template-rows: .5fr repeat(6, 1fr);
-  width: calc(80% - 20px);
-  height: 700px;
+  grid-template-rows: 0.5fr repeat(6, 1fr);
+  width: 80%;
+  max-width: 1000px;
+  height: 600px;
   padding: 10px;
-  padding-top: 0px;
-  max-height: 100%;
-  overflow: auto;
-  column-gap: 0px;
-  row-gap: 0px;
+  border-radius: 10px; 
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 }
 
 .holder {
@@ -122,38 +125,90 @@ function prevMonth() {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100%;
+  height: 100vh;
   width: 100%;
-  background-color: goldenrod;
-  overflow: auto;
-  max-height: 100%;
+  background-color: #131515;
+  margin: 0;
+  overflow: hidden;
 }
 
 .controls {
   padding: 1%;
   display: flex;
-  align-items: center;
   flex-direction: column-reverse;
-  width: 70%;
-  justify-content: center;
   align-items: center;
+  width: 100%;
+  max-width: 900px;
+  margin-bottom: 20px;
+  color: #fffafb;
 }
 
 button {
-  padding: 10px 20px;
-  background-color: azure;
-  border: 2px solid black;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  border-radius: 20px;
+  border: 1px solid #339989;
+  background-color: #339989;
+  color: #fffafb;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 12px 45px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: transform 80ms ease-in;
 }
 
-button:hover {
-  background-color: gold;
+button:active {
+  transform: scale(0.95);
+}
+
+button:focus {
+  outline: none;
+}
+
+button.ghost {
+  background-color: transparent;
+  border-color: #fffafb;
+}
+
+p, h1 {
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
 }
 
 p {
-  font-size: 1.2em;
-  font-family: 'Montserrat', sans-serif;
+  color: #131515;
 }
 
+h1 {
+  margin-top: 1px;
+  font-size: 2em;
+  margin-bottom: 5px;
+}
+
+.calButt {
+  transition: transform 0.3s ease;
+}
+
+.calButt:hover {
+  transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+  #calCon {
+    flex-direction: column;
+  }
+
+  #calRight, #calLeft {
+    width: 10%;
+    height: 10%;
+  }
+
+  #cal {
+    width: 100%;
+    padding: 5px;
+  }
+
+  .controls {
+    width: 90%;
+  }
+}
 </style>
