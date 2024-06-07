@@ -21,6 +21,7 @@
 
 <script setup lang="ts">
 import { defineProps, ref } from 'vue';
+import { supabase } from '@/lib/supabaseClient';
 
 interface Props {
   eventTitle: string;
@@ -41,9 +42,11 @@ function closePopup() {
   showPopup.value = false;
 }
 
-function shareEvent() {
-  // Put your sharing algorithm here.
-  console.log("Sharing event with username:", username.value);
+async function shareEvent() {
+    const { data, error } = await supabase
+  .from('profiles')
+  .update({ sharedEvents: ['1','2'] })
+  .eq('username', username.value)
   username.value = '';
   showPopup.value = false;
 }
