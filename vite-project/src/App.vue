@@ -15,9 +15,8 @@ const store = info();
 
 
   <header>
-    <NavBar v-if="1"></NavBar>
-    <SideBar v-if="store.auth.log"></SideBar>
-    <div id="bottom" v-bind:style="{ width: store.auth.log ? '85%' : '100%' }">
+    <NavBar v-if="1" v-bind:style="{ width: store.auth.log ? '100%' : '100%' }"></NavBar>
+    <div id="bottom" v-bind:style="{ width: store.auth.log ? '100%' : '100%' }">
         <RouterView></RouterView>
       </div>
   </header>
