@@ -1,5 +1,11 @@
 <template>
-    <div>hiii</div>
+    <div>
+        <events></events>
+        <sharedEvents></sharedEvents>
+    </div>
+    <div>
+
+    </div>
 </template>
     
     <style>
@@ -10,6 +16,8 @@
     import { ref, onMounted } from 'vue'
     import { useRouter } from 'vue-router'
     import { supabase } from "../lib/supabaseClient.ts";
+    import events from "@/components/events.vue";
+    import sharedEvents from "../components/sharedEvents.vue";
 
     async function getUser()
     {let x = await supabase.auth.getUser()
