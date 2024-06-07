@@ -1,43 +1,70 @@
 <template>
     <div class="modal" v-if="store.date.popUp">
-          <div class="modal-content">
-              <span class="close" @click="store.date.popUp = false">&times;</span>
-              <h2>Create Event For {{`${props.date[0] + 1}/${props.date[1]}/${props.date[2]}`}}</h2>
-              <form @submit.prevent="submitForm">
-                <div class="form-group">
-                      <label for="event">Event Title:</label>
-                      <input type="text" id="event">
-                  </div>
-                  <div class="form-group">
-                      <label for="urgency">Urgency:</label>
-                      <select id="urgency">
-                          <option value="Low">Low</option>
-                          <option value="Medium">Medium</option>
-                          <option value="High">High</option>
-                      </select>
-                  </div>
-                  <div class="form-group">
-                      <label for="date">Date:</label>
-                      <input type="date" id="date">
-                  </div>
-                  <div class="form-group">
-                      <label for="time">Time:</label>
-                      <input type="time" id="time">
-                  </div>
-                  <button type="submit" @click="store.date.popUp = false">Save</button>
-              </form>
+      <div class="modal-content">
+        <span class="close" @click="store.date.popUp = false">&times;</span>
+        <h2>Create Event For {{ `${props.date[0] + 1}/${props.date[1]}/${props.date[2]}` }}</h2>
+        <form @submit.prevent="submitForm">
+          <div class="form-group">
+            <label for="event">Event Title:</label>
+            <input type="text" id="event" v-model="eventTitle" required>
           </div>
+          <div class="form-group">
+            <label for="urgency">Urgency:</label>
+            <select id="urgency" v-model="urgency" required>
+              <option value="Low">Low</option>
+              <option value="Medium">Medium</option>
+              <option value="High">High</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="date">Date:</label>
+            <input type="date" id="date" v-model="eventDate" required>
+          </div>
+          <div class="form-group">
+            <label for="time">Time:</label>
+            <input type="time" id="time" v-model="eventTime" required>
+          </div>
+          <button type="submit">Save</button>
+        </form>
       </div>
-</template>
-
-<script setup lang="ts">
-  import { dateInfo } from   "@/stores/date"
-  const store = dateInfo(); 
-
- const props = defineProps({
-    date: String,
+    </div>
+  </template>
+  
+  <script setup lang="ts">
+  import { ref, defineProps, PropType } from 'vue';
+  import { dateInfo } from "@/stores/date";
+  const store = dateInfo();
+  
+  const props = defineProps({
+    date: Array as PropType<[number, number, number]>,
   });
-</script>
+  
+  const eventTitle = ref('');
+  const urgency = ref('Low');
+  const eventDate = ref('');
+  const eventTime = ref('');
+  
+  function submitForm() {
+    const eventDateArray = eventDate.value.split('-');
+    const year = parseInt(eventDateArray[0], 10);
+    const month = parseInt(eventDateArray[1], 10) - 1;
+    const day = parseInt(eventDateArray[2], 10);
+
+    const eventObject = {
+      title: eventTitle.value,
+      urgency: urgency.value,
+      date: new Date(year, month, day),
+      time: eventTime.value,
+    };
+  
+    console.log(eventObject);
+    store.date.popUp = false;
+    eventTitle.value = ''
+    urgency.value = ''
+    eventDate.value = ''
+    eventTime.value = ''
+  }
+  </script>
 
 <style scoped>
   .modal {
@@ -52,15 +79,16 @@
   }
 
   .modal-content {
+    font-family: 'Montserrat', sans-serif;
     background-color: #fefefe;
     margin: 10% auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 80%; /* Adjust width as needed */
-    max-width: 400px; /* Set a maximum width for better visibility */
-    border-radius: 8px; /* Add border radius for a rounded look */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
-    position: relative; /* Add position relative for close button positioning */
+    width: 80%;
+    max-width: 400px;
+    border-radius: 8px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    position: relative;
   }
 
   .close {
@@ -79,7 +107,6 @@
     text-decoration: none;
   }
 
-  /* Style the form elements */
   .form-group {
     margin-bottom: 15px;
   }
@@ -94,6 +121,7 @@
   input[type="date"],
   input[type="time"],
   select {
+    font-family: 'Montserrat', sans-serif;
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
@@ -104,6 +132,7 @@
   }
 
   button[type="submit"] {
+    font-family: 'Montserrat', sans-serif;
     background-color: #4CAF50;
     color: white;
     padding: 10px 20px;
