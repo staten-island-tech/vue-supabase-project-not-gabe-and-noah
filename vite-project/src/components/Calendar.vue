@@ -30,7 +30,7 @@ const store = dateInfo();
 let showBox = ref(false)
 const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 const currentDate = ref(new Date());
-let selectedDate = ref(0)
+let selectedDate = ref([0,1,1970])
 const currentYear = store.date.year =computed(() => currentDate.value.getFullYear());
 
 const currentMonth = store.date.month = computed(() => currentDate.value.getMonth());
