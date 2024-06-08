@@ -31,14 +31,12 @@
   </template>
   
   <script setup lang="ts">
-  import { ref, defineProps, PropType } from 'vue';
+  import { ref, defineProps } from 'vue';
   import { dateInfo } from "@/stores/date";
 import { supabase } from '@/lib/supabaseClient';
   const store = dateInfo();
   
-  const props = defineProps({
-    date: Array as PropType<[number, number, number]>,
-  });
+  const props = defineProps<{ date: [number, number, number] | null }>();
   
   let eventTitle = ref('');
   let urgency = ref('Low');
@@ -80,6 +78,7 @@ import { supabase } from '@/lib/supabaseClient';
 }
 
   function submitForm() {
+    if(props.date){
     const eventDateArray = eventDate.split('-');
     const year = parseInt(eventDateArray[0], 10);
     const month = parseInt(eventDateArray[1], 10) - 1;
@@ -94,10 +93,11 @@ import { supabase } from '@/lib/supabaseClient';
   
     console.log(eventObject);
     store.date.popUp = false;
-    eventTitle = ''
-    urgency = ''
-    eventDate = ''
-    eventTime = ''
+    eventTitle.value = ''
+    urgency.value = ''
+    eventDate.value = ''
+    eventTime.value = ''
+  }
   }
   </script>
 

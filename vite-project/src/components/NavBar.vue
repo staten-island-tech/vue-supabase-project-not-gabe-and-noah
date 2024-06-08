@@ -4,7 +4,6 @@
     <div class="links-container" v-if="store.auth.log">
       <router-link class="routerLink" to="/table-view">Table View</router-link>
       <router-link class="routerLink" to="/invite">Invite Thing</router-link>
-      <router-link class="routerLink" to="/calendar">Main Calendar</router-link>
     </div>
     <div v-if="store.auth.errorMessage" class="error-message">{{ store.auth.errorMessage }}</div>
     <div class="clock"><BigFlockingClock /></div>
@@ -12,12 +11,63 @@
 </template>
 
 <script setup lang="ts">
-import { info } from "@/stores/store"
-const store = info(); 
+import { info } from "@/stores/store";
 import { ref } from "vue";
-let name = ref(store.auth.name)
 import BigFlockingClock from './BigFlockingClock.vue';
+
+const store = info();
+
+let name = ref<string | null>(store.auth.name); 
 </script>
+
+<style scoped>
+.barBody {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #e5e5e5;
+  background-color: aqua;
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 5%;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.username,
+.clock,
+.routerLink {
+  font-size: 1.2em;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
+}
+
+.links-container {
+  display: flex;
+  gap: 20px;
+}
+
+.routerLink {
+  text-decoration: none;
+  text-align: center;
+  color: #333;
+  margin: 20px;
+}
+
+.routerLink:hover {
+  color: #339989;
+}
+
+.error-message {
+  font-size: 1em;
+  color: #ff4b2b;
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+}
+</style>
+
 
 <style scoped>
 #false {

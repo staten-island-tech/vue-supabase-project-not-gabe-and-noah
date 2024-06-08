@@ -2,51 +2,51 @@
   <div class="holder">
     <popUpBox v-if="showBox" :date="selectedDate"></popUpBox>
     <div class="controls">
-      <div id="buttons">
-      
-      
-    </div>
+      <div id="buttons"></div>
       <h1>{{ currentMonthName }} {{ currentYear }}</h1>
     </div>
     <div id="calCon">
       <img class="calButt" id="calLeft" @click="prevMonth" src="https://icon-library.com/images/camping-icon-png/camping-icon-png-23.jpg">
-        <div id="cal">
-      <blankBox v-for="day in daysOfWeek" :day="day" :key="day"></blankBox>
-      <calBox v-for="(date, index) in boxes" :date="date" :key="index" @popUp="(date) => popUp(date)"></calBox>
-    </div>
-    <img class="calButt" id="calRight" @click="nextMonth" src="https://icon-library.com/images/camping-icon-png/camping-icon-png-23.jpg">
+      <div id="cal">
+        <blankBox v-for="day in daysOfWeek" :day="day" :key="day"></blankBox>
+        <calBox v-for="(date, index) in boxes" :date="date" :key="index" @popUp="(date) => popUp(date)"></calBox>
+      </div>
+      <img class="calButt" id="calRight" @click="nextMonth" src="https://icon-library.com/images/camping-icon-png/camping-icon-png-23.jpg">
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import calBox from '@/components/calBox.vue'
+import calBox from '@/components/calBox.vue';
 import blankBox from './blankBox.vue';
 import { ref, computed } from 'vue';
-import { dateInfo } from "@/stores/date"
-import popUpBox from "@/components/popUp.vue"
+import { dateInfo } from "@/stores/date";
+import popUpBox from "@/components/popUp.vue";
 
-const store = dateInfo(); 
-let showBox = ref(false)
+const store = dateInfo();
+const showBox = ref(false);
 const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 const currentDate = ref(new Date());
-let selectedDate = ref(null)
-const currentYear = store.date.year =computed(() => currentDate.value.getFullYear());
+const selectedDate = ref<[number, number, number] | null>(null); // Updated type for selectedDate
 
-const currentMonth = store.date.month = computed(() => currentDate.value.getMonth());
+const currentYear = computed(() => currentDate.value.getFullYear());
+store.date.year = currentYear.value;
+
+const currentMonth = computed(() => currentDate.value.getMonth());
+store.date.month = currentMonth.value;
+
 const currentMonthName = computed(() => currentDate.value.toLocaleString('default', { month: 'long' }));
 
-console.log(store.date.year)
 const daysInMonth = computed(() => {
   return new Date(currentYear.value, currentMonth.value + 1, 0).getDate();
 });
 
-const firstDay = computed (() => {
+const firstDay = computed(() => {
   return new Date(currentYear.value, currentMonth.value, 1).getDay();
 });
 
 const boxes = computed(() => {
-  const days = []
+  const days: string[] = [];
   for (let i = 1; i <= firstDay.value; i++) {
     days.push('');
   }
@@ -56,7 +56,7 @@ const boxes = computed(() => {
   return days;
 });
 
-function popUp(date) {
+function popUp(date: [number, number, number]) {
   if (Array.isArray(date) && date.length === 3 && !isNaN(date[0]) && !isNaN(date[1]) && !isNaN(date[2])) {
     selectedDate.value = date;
     showBox.value = true;
@@ -73,6 +73,7 @@ function prevMonth() {
   currentDate.value = new Date(currentDate.value);
 }
 </script>
+
 
 <style>
 
