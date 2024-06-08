@@ -14,7 +14,7 @@ const updateClock = () => {
   currentTime.value = now.toLocaleString('en-US', { timeZone: 'America/New_York' });
 };
 
-let intervalId: number | undefined;
+let intervalId: ReturnType<typeof setInterval> | undefined;
 
 onMounted(() => {
   updateClock();
@@ -22,7 +22,7 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-  if (intervalId) {
+  if (intervalId !== undefined) {
     clearInterval(intervalId);
   }
 });

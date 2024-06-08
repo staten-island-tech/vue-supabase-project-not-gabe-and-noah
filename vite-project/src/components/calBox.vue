@@ -1,27 +1,41 @@
 <template>
-    <div @click="store.date.popUp = true; $emit('popUp', [store.date.month, parseInt(props.date), store.date.year ])" :class="['box', { 'hoverable': isHoverable }]">
-      <p>{{ props.date }}</p>
-    </div>
-  </template>
-  
-  <script setup lang="ts">
-  import { defineProps, computed } from 'vue';
-  import { info } from "@/stores/store"
-  import { dateInfo } from   "@/stores/date"
-const store = dateInfo(); 
+  <div @click="handleClick" :class="['box', { 'hoverable': isHoverable }]">
+    <p>{{ props.date }}</p>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { defineProps, computed, toRefs, defineEmits } from 'vue';
+import { dateInfo } from "@/stores/date";
+
+const store = dateInfo();
+
+const props = defineProps<{
+  date: number | string;
+}>();
+
+const { date } = toRefs(props);
+
+const emit = defineEmits<{
+  (e: 'popUp', payload: [number, number, number]): void;
+}>();
+
+const isHoverable = computed(() => {
+  const dateValue = typeof date.value === 'string' ? parseInt(date.value) : date.value;
+  console.log(dateValue);
+  return dateValue > 0;
+});
+
+const handleClick = () => {
+  store.date.popUp = true;
+  const dateValue = typeof props.date === 'string' ? parseInt(props.date) : props.date;
+  if (!isNaN(dateValue)) {
+    emit('popUp', [store.date.month, dateValue, store.date.year]);
+  }
+};
+</script>
 
 
-  const props = defineProps({
-    date: [Number, String]
-  });
-  
-  const isHoverable = computed(() => {
-    const date = parseInt(props.date);
-    console.log(date)
-    return (date > 0);
-  });
-
-  </script>
   
   <style scoped>
   .box {

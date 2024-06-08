@@ -30,10 +30,13 @@ const store = dateInfo();
 let showBox = ref(false)
 const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 const currentDate = ref(new Date());
-let selectedDate = ref(null)
-const currentYear = store.date.year =computed(() => currentDate.value.getFullYear());
+const selectedDate = ref<[number, number, number] | null>(null);
+const currentYear = computed(() => currentDate.value.getFullYear());
+store.date.year = currentYear.value
 
-const currentMonth = store.date.month = computed(() => currentDate.value.getMonth());
+const currentMonth = computed(() => currentDate.value.getMonth());
+store.date.month = currentMonth.value
+
 const currentMonthName = computed(() => currentDate.value.toLocaleString('default', { month: 'long' }));
 
 console.log(store.date.year)
@@ -56,7 +59,7 @@ const boxes = computed(() => {
   return days;
 });
 
-function popUp(date) {
+function popUp(date: [number, number, number]) {
   if (Array.isArray(date) && date.length === 3 && !isNaN(date[0]) && !isNaN(date[1]) && !isNaN(date[2])) {
     selectedDate.value = date;
     showBox.value = true;

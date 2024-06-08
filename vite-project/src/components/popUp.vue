@@ -1,50 +1,51 @@
 <template>
-    <div class="modal" v-if="store.date.popUp">
-      <div class="modal-content">
-        <span class="close" @click="store.date.popUp = false">&times;</span>
-        <h2>Create Event For {{ `${props.date[0] + 1}/${props.date[1]}/${props.date[2]}` }}</h2>
-        <form @submit.prevent="submitForm">
-          <div class="form-group">
-            <label for="event">Event Title:</label>
-            <input type="text" id="event" v-model="eventTitle" required>
-          </div>
-          <div class="form-group">
-            <label for="urgency">Urgency:</label>
-            <select id="urgency" v-model="urgency" required>
-              <option value="Low">Low</option>
-              <option value="Medium">Medium</option>
-              <option value="High">High</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="date">Date:</label>
-            <input type="date" id="date" v-model="eventDate" required>
-          </div>
-          <div class="form-group">
-            <label for="time">Time:</label>
-            <input type="time" id="time" v-model="eventTime" required>
-          </div>
-          <button type="submit">Save</button>
-        </form>
-      </div>
+  <div class="modal" v-if="store.date.popUp && props.date">
+    <div class="modal-content">
+      <span class="close" @click="store.date.popUp = false">&times;</span>
+      <h2 v-if="props.date">Create Event For {{ props.date[0] + 1 }}/{{ props.date[1] }}/{{ props.date[2] }}</h2>
+      <form @submit.prevent="submitForm" v-if="props.date">
+        <div class="form-group">
+          <label for="event">Event Title:</label>
+          <input type="text" id="event" v-model="eventTitle" required>
+        </div>
+        <div class="form-group">
+          <label for="urgency">Urgency:</label>
+          <select id="urgency" v-model="urgency" required>
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="date">Date:</label>
+          <input type="date" id="date" v-model="eventDate" required>
+        </div>
+        <div class="form-group">
+          <label for="time">Time:</label>
+          <input type="time" id="time" v-model="eventTime" required>
+        </div>
+        <button type="submit">Save</button>
+      </form>
     </div>
-  </template>
-  
-  <script setup lang="ts">
-  import { ref, defineProps, PropType } from 'vue';
-  import { dateInfo } from "@/stores/date";
-  const store = dateInfo();
-  
-  const props = defineProps({
-    date: Array as PropType<[number, number, number]>,
-  });
-  
-  const eventTitle = ref('');
-  const urgency = ref('Low');
-  const eventDate = ref('');
-  const eventTime = ref('');
-  
-  function submitForm() {
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref, defineProps } from 'vue';
+import { dateInfo } from "@/stores/date";
+const store = dateInfo();
+
+const props = defineProps<{ 
+  date: [number, number, number] | null 
+}>();
+
+const eventTitle = ref('');
+const urgency = ref('Low');
+const eventDate = ref('');
+const eventTime = ref('');
+
+function submitForm() {
+  if (props.date) {
     const eventDateArray = eventDate.value.split('-');
     const year = parseInt(eventDateArray[0], 10);
     const month = parseInt(eventDateArray[1], 10) - 1;
@@ -64,7 +65,8 @@
     eventDate.value = ''
     eventTime.value = ''
   }
-  </script>
+}
+</script>
 
 <style scoped>
   .modal {
