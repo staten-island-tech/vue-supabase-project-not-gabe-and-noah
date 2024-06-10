@@ -3,7 +3,7 @@
       <div v-if="viewedArray && viewedArray.length > 0">
         <ul>
           <div v-for="event in viewedArray" :key="event.id">
-            <events :eventTitle="event.eventTitle" :urgency="event.urgency" :time="event.time" :date="event.date" />
+            <events :eventTitle="event.eventTitle" :urgency="event.date" :time="event.urgency" :date="event.time" />
           </div>
         </ul>
       </div>
@@ -13,7 +13,7 @@
     </div>
   </template>
   
-  <script setup lang="ts">
+  <script setup>
   import { ref } from 'vue';
   import { supabase } from "../lib/supabaseClient.ts";
   import events from "@/components/events.vue";

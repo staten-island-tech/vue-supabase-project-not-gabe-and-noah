@@ -3,7 +3,7 @@
       <div class="modal-content">
         <span class="close" @click="store.date.popUp = false">&times;</span>
         <h2>Create Event For {{ `${props.date[0] + 1}/${props.date[1]}/${props.date[2]}` }}</h2>
-        <form @submit.prevent="submitForm">
+        <form>
           <div class="form-group">
             <label for="event">Event Title:</label>
             <input type="text" id="event" v-model="eventTitle" required>
@@ -75,30 +75,8 @@ import { supabase } from '@/lib/supabaseClient';
   .from('profiles')
   .update({ events: newArray })
   .eq('id', localUser.data.user.id)}
+  store.date.popUp = false;
 }
-
-  function submitForm() {
-    if(props.date){
-    const eventDateArray = eventDate.split('-');
-    const year = parseInt(eventDateArray[0], 10);
-    const month = parseInt(eventDateArray[1], 10) - 1;
-    const day = parseInt(eventDateArray[2], 10);
-
-    const eventObject = {
-      title: eventTitle,
-      urgency: urgency,
-      date: new Date(year, month, day),
-      time: eventTime,
-    };
-  
-    console.log(eventObject);
-    store.date.popUp = false;
-    eventTitle.value = ''
-    urgency.value = ''
-    eventDate.value = ''
-    eventTime.value = ''
-  }
-  }
   </script>
 
 <style scoped>
