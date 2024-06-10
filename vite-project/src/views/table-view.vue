@@ -67,6 +67,8 @@
 <style scoped>
 
 .container {
+  height: 100%;
+  overflow-y: auto;
     position: absolute;
     top: 0;
     left: 0;
