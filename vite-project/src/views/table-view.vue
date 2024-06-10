@@ -1,44 +1,69 @@
 <template>
     <div class="container">
-       <div v-if="b && b != ''">
-        <div v-for="events in b" :key="b" :eventTitle="events.eventTitle" :urgency="events.urgency" :time="events.time" :date="events.date">
-        <events></events>
-       </div>        
-</div> 
+      <div v-if="viewedArray && viewedArray.length > 0">
+        <ul>
+          <div v-for="event in viewedArray" :key="event.id">
+            <events :eventTitle="event.eventTitle" :urgency="event.urgency" :time="event.time" :date="event.date" />
+          </div>
+        </ul>
+      </div>
+      <div v-else>
+        Nothing here!
+      </div>
     </div>
-</template>
-     
-    <style>
-    
-    </style>
-    
-    <script setup lang="ts">
-    import { ref, onMounted } from 'vue'
-    import { useRouter } from 'vue-router'
-    import { supabase } from "../lib/supabaseClient.ts";
-    import events from "@/components/events.vue";
-    import sharedEvents from "../components/sharedEvents.vue";
-    const b = ref([]);
-
-    async function getUser(){
-    let x = await supabase.auth.getUser()
-    console.log(x.data.user.id)
-    let theThingy = await supabase
-    .from('profiles') 
-    .select("*")
-    .eq('id', x.data.user.id)
-    let c =  theThingy.data[0].events
-    c.forEach(async (eventId) => {
-    let event = await supabase
-    .from('event')
-    .select("*") 
-    .eq('id', Number(eventId))
-     b.value = [...b.value,{eventTitle:event.data[0].eventName, date: event.data[0].dateDue, time:event.data[0].eventType, urgency: event.data[0].eventUrgency}]
-});
-    console.log(b.value)
+  </template>
+  
+  <script setup lang="ts">
+  import { ref } from 'vue';
+  import { supabase } from "../lib/supabaseClient.ts";
+  import events from "@/components/events.vue";
+  
+  interface Event {
+    id: number;
+    eventTitle: string;
+    date: string;
+    time: string;
+    urgency: string;
+  }
+  const viewedArray = ref<Event[]>([]);
+  
+  async function getUser() {
+    try {
+      const x = await supabase.auth.getUser();
+      const theThingy = await supabase
+        .from('profiles')
+        .select("*")
+        .eq('id', x.data.user.id);
+      const eventsIds = theThingy.data[0].events;
+        const eventDataPromises = eventsIds.map(async (eventId: number) => {
+        const { data: eventData, error } = await supabase
+          .from('event')
+          .select("*") 
+          .eq('id', eventId);
+        if (error) {
+          console.error('Error fetching event:', error.message);
+          return null;
+        }
+        if (eventData && eventData.length > 0) {
+          return {
+            id: eventData[0].id,
+            eventTitle: eventData[0].eventName,
+            date: eventData[0].dateDue,
+            time: eventData[0].eventType,
+            urgency: eventData[0].eventUrgency
+          };
+        }
+        return null;
+      });
+        const eventDataArray = await Promise.all(eventDataPromises);
+        viewedArray.value = eventDataArray.filter(eventData => eventData !== null);
+    } catch (error) {
+      console.error('not bazinga');
     }
-    getUser()
-    </script>
+  }
+    getUser();
+  </script>
+  
 <style scoped>
 
 .container {
