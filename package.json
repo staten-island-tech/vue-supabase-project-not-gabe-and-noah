@@ -1,5 +1,11 @@
 {
   "dependencies": {
-    "@supabase/supabase-js": "^2.43.4"
+    "@supabase/supabase-js": "^2.43.4",
+    "@vue/cli-plugin-typescript": "^5.0.8",
+    "@vue/compiler-sfc": "^3.4.27",
+    "vue": "^3.4.27"
+  },
+  "devDependencies": {
+    "vue-tsc": "^2.0.21"
   }
 }

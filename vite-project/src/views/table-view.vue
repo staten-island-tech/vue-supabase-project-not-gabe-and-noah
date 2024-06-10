@@ -3,7 +3,7 @@
       <div v-if="viewedArray && viewedArray.length > 0">
         <ul>
           <div v-for="event in viewedArray" :key="event.id">
-            <events :eventTitle="event.eventTitle" :urgency="event.urgency" :time="event.time" :date="event.date" />
+            <events :eventTitle="event.eventTitle" :urgency="event.date" :time="event.urgency" :date="event.time" />
           </div>
         </ul>
       </div>
@@ -15,54 +15,79 @@
   
   <script setup lang="ts">
   import { ref } from 'vue';
-  import { supabase } from "../lib/supabaseClient.ts";
+  import { supabase } from "../lib/supabaseClient";
   import events from "@/components/events.vue";
   
   interface Event {
     id: number;
     eventTitle: string;
+    urgency: string;
     date: string;
     time: string;
-    urgency: string;
   }
+  
   const viewedArray = ref<Event[]>([]);
   
   async function getUser() {
     try {
       const x = await supabase.auth.getUser();
+  
+      if (!x?.data?.user) {
+        console.error('User is not authenticated');
+        return;
+      }
+  
+      const user = x.data.user;
       const theThingy = await supabase
         .from('profiles')
         .select("*")
-        .eq('id', x.data.user.id);
-      const eventsIds = theThingy.data[0].events;
-        const eventDataPromises = eventsIds.map(async (eventId: number) => {
+        .eq('id', user.id);
+  
+      if (!theThingy?.data) {
+        console.error('Profile data is not available');
+        return;
+      }
+  
+      const eventsIds = theThingy.data[0]?.events;
+      if (!eventsIds || eventsIds.length === 0) {
+        console.error('No events found for the user');
+        return;
+      }
+  
+      const eventDataPromises = eventsIds.map(async (eventId: number) => {
         const { data: eventData, error } = await supabase
           .from('event')
-          .select("*") 
+          .select("*")
           .eq('id', eventId);
+        
         if (error) {
           console.error('Error fetching event:', error.message);
           return null;
         }
+  
         if (eventData && eventData.length > 0) {
           return {
             id: eventData[0].id,
             eventTitle: eventData[0].eventName,
+            urgency: eventData[0].eventUrgency,
             date: eventData[0].dateDue,
             time: eventData[0].eventType,
-            urgency: eventData[0].eventUrgency
           };
         }
+  
         return null;
       });
-        const eventDataArray = await Promise.all(eventDataPromises);
-        viewedArray.value = eventDataArray.filter(eventData => eventData !== null);
+  
+      const eventDataArray = await Promise.all(eventDataPromises);
+      viewedArray.value = eventDataArray.filter(eventData => eventData !== null) as Event[];
     } catch (error) {
-      console.error('not bazinga');
+      console.error('An error occurred:', (error as Error).message);
     }
   }
-    getUser();
+  
+  getUser();
   </script>
+  
   
 <style scoped>
 
