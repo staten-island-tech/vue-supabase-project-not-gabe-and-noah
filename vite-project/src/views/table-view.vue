@@ -41,7 +41,7 @@
           .select("*") 
           .eq('id', eventId);
         if (error) {
-          console.error('Error fetching event:', error.message);
+          console.error('not bazinga')
           return null;
         }
         if (eventData && eventData.length > 0) {
