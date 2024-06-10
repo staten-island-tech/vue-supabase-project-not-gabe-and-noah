@@ -27,8 +27,7 @@ const store = dateInfo();
 const showBox = ref(false);
 const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 const currentDate = ref(new Date());
-const selectedDate = ref<[number, number, number] | null>(null); // Updated type for selectedDate
-
+const selectedDate = ref<[number, number, number] | null>(null); 
 const currentYear = computed(() => currentDate.value.getFullYear());
 store.date.year = currentYear.value;
 

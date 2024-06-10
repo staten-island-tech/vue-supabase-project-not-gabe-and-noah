@@ -7,7 +7,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'login',
-      component: Login,
+      component: () => import('../views/Login.vue')
     },
     {
       path: '/calendar',

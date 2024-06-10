@@ -16,8 +16,6 @@ import { ref } from "vue";
 import BigFlockingClock from './BigFlockingClock.vue';
 
 const store = info();
-
-let name = ref<string | null>(store.auth.name); 
 </script>
 
 <style scoped>

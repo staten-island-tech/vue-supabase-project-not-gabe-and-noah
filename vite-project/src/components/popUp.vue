@@ -24,7 +24,7 @@
             <label for="time">Time:</label>
             <input type="time" id="time" v-model="eventTime" required>
           </div>
-          <button type="submit" @click="test">Save</button>
+          <button type="submit" @click.prevent="test">Save</button>
         </form>
       </div>
     </div>
