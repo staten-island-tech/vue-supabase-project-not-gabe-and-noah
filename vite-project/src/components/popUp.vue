@@ -6,7 +6,7 @@
         <form @submit.prevent="submitForm">
           <div class="form-group">
             <label for="event">Event Title:</label>
-            <input type="text" id="event" v-model="(eventTitle as any)" required>
+            <input type="text" id="event" v-model="eventTitle" required>
           </div>
           <div class="form-group">
             <label for="urgency">Urgency:</label>
