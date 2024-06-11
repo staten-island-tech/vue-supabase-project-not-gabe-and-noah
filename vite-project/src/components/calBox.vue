@@ -17,6 +17,32 @@ import { dateInfo } from "@/stores/date";
     console.log(date)
     return (date > 0);
   });S
+const store = dateInfo();
+
+const props = defineProps<{
+  date: number | string;
+}>();
+
+const { date } = toRefs(props);
+
+const emit = defineEmits<{
+  (e: 'popUp', payload: [number, number, number]): void;
+}>();
+
+const isHoverable = computed(() => {
+  const dateValue = typeof date.value === 'string' ? parseInt(date.value) : date.value;
+  console.log(dateValue);
+  return dateValue > 0;
+});
+
+const handleClick = () => {
+  store.date.popUp = true;
+  const dateValue = typeof props.date === 'string' ? parseInt(props.date) : props.date;
+  if (!isNaN(dateValue)) {
+    emit('popUp', [store.date.month, dateValue, store.date.year]);
+  }
+};
+</script>
 
   
   <style scoped>
