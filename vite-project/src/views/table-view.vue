@@ -3,7 +3,7 @@
       <div v-if="viewedArray && viewedArray.length > 0">
         <ul>
           <div v-for="event in viewedArray" :key="event.id">
-            <events :eventTitle="event.eventTitle" :urgency="event.date" :time="event.urgency" :date="event.time" />
+            <events :eventTitle="event.eventTitle" :urgency="event.urgency" :time="event.time" :date="event.date" />
           </div>
         </ul>
       </div>

@@ -39,10 +39,10 @@ const store = dateInfo();
 
 const props = defineProps<{ date: [number, number, number] | null }>();
 
-let eventTitle = ref('');
-let urgency = ref('Low');
-let eventDate = ref('');
-let eventTime = ref('');
+let eventTitle = ref<string>('');
+let urgency = ref<string>('Low');
+let eventDate = ref<string>('');
+let eventTime = ref<string>('');
 
 async function test() {
   try {

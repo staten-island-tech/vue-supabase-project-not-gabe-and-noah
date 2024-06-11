@@ -9,7 +9,7 @@ import { ref, onMounted, onUnmounted } from 'vue';
 
 const currentTime = ref('');
 
-const updateClock = () => {
+function updateClock() {
 const now = new Date();
 currentTime.value = now.toLocaleString('en-US', { timeZone: 'America/New_York' });
 };
