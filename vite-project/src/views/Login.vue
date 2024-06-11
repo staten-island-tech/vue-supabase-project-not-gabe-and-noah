@@ -1,137 +1,150 @@
 <template>
-	<div class="page">
-	<wave></wave>
-<div class="container" id="container">
-	<div class="form-container sign-up-container">
-		<form action="#">
-			<h1>Create Account</h1>
-			<span>Use your email for registration.</span>
-			<input type="username" placeholder="Username" ref="username" />
-			<input type="emailSign" placeholder="Email" ref="emailSign" />
-			<input type="password" placeholder="Password" ref="passwordSign" />
-			<button @click.prevent.self @click="createAccount">Sign Up</button>
-		</form>
-	</div>
-	<div class="form-container sign-in-container">
-		<form action="#">
-			<h1>Sign in</h1>
-			<span>Use your account to sign in.</span>
-			<input type="emailLog" placeholder="Email"  ref="emailLog"/>
-			<input type="password" placeholder="Password" ref="passwordLog"/>
-			<a href="#">Forgot your password?</a>
-			<button @click.prevent.self @click="login">Sign In</button>
-		</form>
-	</div>
-	<div class="overlay-container">
-		<div class="overlay">
-			<div class="overlay-panel overlay-left">
-				<h1>Welcome Back!</h1>
-				<p>Log back in to continue using our website.</p>
-				<button class="ghost" id="signIn"> Sign In</button>
-			</div>
-			<div class="overlay-panel overlay-right">
-				<h1>New to our website?</h1>
-				<p>Create an account now!</p>
-				<button class="ghost" id="signUp">Sign Up</button>
-			</div>
-		</div>
-	</div>
-</div>
-</div>
+  <div class="page">
+    <wave></wave>
+    <div class="container" id="container">
+      <div class="form-container sign-up-container">
+        <form action="#">
+          <h1>Create Account</h1>
+          <span>Use your email for registration.</span>
+          <input type="text" placeholder="Username" v-model="username" />
+          <input type="email" placeholder="Email" v-model="emailSign" />
+          <input type="password" placeholder="Password" v-model="passwordSign" />
+          <button @click.prevent="createAccount">Sign Up</button>
+        </form>
+      </div>
+      <div class="form-container sign-in-container">
+        <form action="#">
+          <h1>Sign in</h1>
+          <span>Use your account to sign in.</span>
+          <input type="email" placeholder="Email" v-model="emailLog" />
+          <input type="password" placeholder="Password" v-model="passwordLog" />
+          <a href="#">Forgot your password?</a>
+          <button @click.prevent="login">Sign In</button>
+        </form>
+      </div>
+      <div class="overlay-container">
+        <div class="overlay">
+          <div class="overlay-panel overlay-left">
+            <h1>Welcome Back!</h1>
+            <p>Log back in to continue using our website.</p>
+            <button class="ghost" id="signIn">Sign In</button>
+          </div>
+          <div class="overlay-panel overlay-right">
+            <h1>New to our website?</h1>
+            <p>Create an account now!</p>
+            <button class="ghost" id="signUp">Sign Up</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
-
-import wave from '@/components/wave.vue'
-import { useRoute, useRouter } from 'vue-router'
-import { onMounted } from 'vue';
-import { ref } from "vue";
+import wave from '@/components/wave.vue';
+import { useRoute, useRouter } from 'vue-router';
+import { onMounted, ref } from 'vue';
 import { supabase } from "../lib/supabaseClient.ts";
-import { info } from "@/stores/store"
-const store = info(); 
-const router = useRouter()
-const route = useRoute()
-let username = ref("").value;
-let emailSign = ref("").value;
-let passwordSign = ref("").value;
-let emailLog = ref("").value;
-let passwordLog = ref("").value;
+import { info } from "@/stores/store";
 
-console.log(supabase)
-async function createAccount(){
-  let x = await supabase.auth.getUser()
-  console.log(x)
-  //const { data, error } = await supabase
-  //.from('profiles')
-  //.update({ username: 'otherValue' })
-  //.is(id, 1)
+const store = info();
+const router = useRouter();
+const route = useRoute();
 
-	console.log(emailSign.value,passwordSign.value)
-    const {data, error} = await supabase.auth.signUp({
+const username = ref<string>("");
+const emailSign = ref<string>("");
+const passwordSign = ref<string>("");
+const emailLog = ref<string>("");
+const passwordLog = ref<string>("");
+
+async function createAccount() {
+  try {
+    const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
       email: emailSign.value,
       password: passwordSign.value,
-    })
+    });
 
-    if (error){
-      console.log(error)
-    } else{
-      const {data, error} = await supabase.auth.signInWithPassword({
-      email: emailSign.value,
-      password: passwordSign.value,
-    }) 
-      if (error) {
-      console.log(error)
-	    store.auth.errorMessage = error.message;
+    if (signUpError) {
+      console.log(signUpError);
+      store.auth.errorMessage = signUpError.message;
+    } else {
+      const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
+        email: emailSign.value,
+        password: passwordSign.value,
+      });
+
+      if (signInError) {
+        console.log(signInError);
+        store.auth.errorMessage = signInError.message;
       } else {
-      console.log(data)
-	  console.log("wrk")
-	  store.auth.log = true
-	  store.auth.name = data.user.email
-    store.auth.errorMessage = "";
-    console.log(username.value)
-  const updateUser = await supabase
-  .from('profiles')
-  .update({ username: username.value})
-  .eq('id', data.user.id)
-  console.log(updateUser)
-  router.replace({ path: '/calendar' })
+        console.log(signInData);
+        if (signInData && signInData.user) {
+          store.auth.log = true;
+          store.auth.name = signInData.user.email;
+          store.auth.errorMessage = "";
 
+          const { data: updateUser, error: updateUserError } = await supabase
+            .from('profiles')
+            .update({ username: username.value })
+            .eq('id', signInData.user.id);
+
+          if (updateUserError) {
+            console.log(updateUserError);
+          } else {
+            console.log(updateUser);
+            router.replace({ path: '/calendar' });
+          }
+        }
+      }
     }
-    }
+  } catch (error) {
+    console.error('Error creating account:', error);
   }
+}
 
-
-async function login(){
-    const {data, error} = await supabase.auth.signInWithPassword({
+async function login() {
+  try {
+    const { data, error } = await supabase.auth.signInWithPassword({
       email: emailLog.value,
       password: passwordLog.value,
-    }) 
-    if (error) {
-      console.log(error)
-	  store.auth.errorMessage = error.message;
-    } else {
-      console.log(data)
-	  console.log("wrk")
-	  store.auth.log = true
-	  store.auth.name = data.user.email
-    store.auth.errorMessage = "";
-	  router.replace({ path: '/calendar' })
-    }
-  }
+    });
 
-async function logout(){
-    const {error} = await supabase.auth.signOut();
     if (error) {
-      console.log(error)
-    } else { console.log('logged out!!!')}
+      console.log(error);
+      store.auth.errorMessage = error.message;
+    } else {
+      console.log(data);
+      if (data && data.user) {
+        store.auth.log = true;
+        store.auth.name = data.user.email;
+        store.auth.errorMessage = "";
+        router.replace({ path: '/calendar' });
+      }
+    }
+  } catch (error) {
+    console.error('Error logging in:', error);
   }
+}
+
+async function logout() {
+  try {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Logged out!');
+    }
+  } catch (error) {
+    console.error('Error logging out:', error);
+  }
+}
 
 onMounted(() => {
-	const signUpButton = document.getElementById('signUp');
-	const signInButton = document.getElementById('signIn');
-	const container = document.getElementById('container');
+  const signUpButton = document.getElementById('signUp');
+  const signInButton = document.getElementById('signIn');
+  const container = document.getElementById('container');
 
-  if (signUpButton !== null && signInButton !== null && container !== null) {
+  if (signUpButton && signInButton && container) {
     signUpButton.addEventListener('click', () => {
       container.classList.add("right-panel-active");
     });
@@ -141,8 +154,8 @@ onMounted(() => {
     });
   }
 });
-
 </script>
+
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');

@@ -4,7 +4,7 @@ import { defineStore } from 'pinia';
 interface AuthState {
   log: boolean;
   email: string;
-  name: string;
+  name: string | undefined;
   width: number;
   mostRecentDate: string;
   errorMessage: string | null;
