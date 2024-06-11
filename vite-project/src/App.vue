@@ -29,17 +29,17 @@ const store = info();
 
 <style scoped>
 .route-enter-from {
-  /* opacity: 0; */
-  transform: rotate3d(1,0,0,360deg);
+  opacity: 0;
+  transform: translateY(1000px);
 }
 .route-enter-active {
   transition: all .5s ease-out; 
 }
-.route-leave-to {
-  /* opacity: 0; */
-  transform: rotate3d(1,0,0,360deg);
+/* .route-leave-to {
+  opacity: 0;
+  transform: translateY(-100px);
   /* transform: translateX(-100px); */
-}
+} */
 .route-leave-active {
   transition: all .5s ease-in; 
 }
