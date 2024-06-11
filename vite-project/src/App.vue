@@ -17,12 +17,32 @@ const store = info();
   <header>
     <NavBar v-if="1" v-bind:style="{ width: store.auth.log ? '100%' : '100%' }"></NavBar>
     <div id="bottom" v-bind:style="{ width: store.auth.log ? '100%' : '100%' }">
-        <RouterView></RouterView>
+      
+      <router-view v-slot="{ Component }">
+        <transition name="route" mode="out-in">
+      <component :is="Component"></component>
+    </transition>
+      </router-view>
       </div>
   </header>
 </template>
 
 <style scoped>
+.route-enter-from {
+  /* opacity: 0; */
+  transform: rotate3d(1,0,0,360deg);
+}
+.route-enter-active {
+  transition: all .5s ease-out; 
+}
+.route-leave-to {
+  /* opacity: 0; */
+  transform: rotate3d(1,0,0,360deg);
+  /* transform: translateX(-100px); */
+}
+.route-leave-active {
+  transition: all .5s ease-in; 
+}
 #bottom{
   color:aqua;
   position: absolute;

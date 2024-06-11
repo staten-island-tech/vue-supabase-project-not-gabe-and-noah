@@ -1,6 +1,6 @@
 <template>
   <div>
-      <p>{{ currentTime }}</p>
+      <p>{{ currentTime.split(",").pop() }}</p>
   </div>
 </template>
 

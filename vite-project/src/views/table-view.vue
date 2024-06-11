@@ -1,11 +1,7 @@
 <template>
     <div class="container">
-      <div v-if="viewedArray && viewedArray.length > 0">
-        <ul>
-          <div v-for="event in viewedArray" :key="event.id">
-            <events :eventTitle="event.eventTitle" :urgency="event.urgency" :time="event.time" :date="event.date" />
-          </div>
-        </ul>
+      <div v-if="viewedArray && viewedArray.length > 0" id="what">
+            <events v-for="event in viewedArray" :key="event.id" :eventTitle="event.eventTitle" :urgency="event.urgency" :time="event.time" :date="event.date" />
       </div>
       <div v-else>
         Nothing here!
@@ -17,7 +13,11 @@
 import { ref } from 'vue';
 import { supabase } from "../lib/supabaseClient.ts";
 import events from "@/components/events.vue";
-
+import { info } from "@/stores/store"
+import { useRouter } from 'vue-router'
+import calendar from "@/components/Calendar.vue"
+const router = useRouter()
+const store = info(); 
 interface Event {
   id: number;
   eventTitle: string;
@@ -59,6 +59,7 @@ async function getUser() {
         });
         const eventDataArray = await Promise.all(eventDataPromises);
         viewedArray.value = eventDataArray.filter(eventData => eventData !== null);
+        viewedArray.value.sort(compareFn);
       }
     }
   } catch (error) {
@@ -66,16 +67,38 @@ async function getUser() {
   }
 }
 getUser();
+
+function compareFn(a: object, b: object) {
+  // let test = a['date'].split("-", 3)
+  if(a['date' as keyof Object].split("-", 3)[0] + a['date' as keyof Object].split("-", 3)[1] + a['date' as keyof Object].split("-", 3)[2] > b['date' as keyof Object].split("-", 3)[0] + b['date' as keyof Object].split("-", 3)[1] + b['date' as keyof Object].split("-", 3)[2]){
+    return -1
+  }
+else{
+  return 1
+}
+}
+if (store.auth.log) {
+            console.log(store.auth.log);
+          } else {
+            console.log(store.auth.log);
+            router.replace({ path: '/calendar' });
+          }
+        
 </script>
 
   
 <style scoped>
-
+#what{
+  display: flex;
+  width: 100%;
+}
 .container {
   height: 100%;
   overflow-y: auto;
     position: absolute;
     top: 0;
+    display: flex;
+    flex-direction: column;
     left: 0;
     width: 100%;
     height: 100%;

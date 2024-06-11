@@ -53,9 +53,10 @@ async function shareEvent() {
 
 <style scoped>
 .event-display {
-  max-width: 400px;
-  margin: auto;
-  padding: 20px;
+  max-width: 20%;
+
+  padding: 50px;
+  margin: 10px;
   margin-top: 10px;
   border: 1px solid #ccc;
   background-color: #131515;
@@ -75,6 +76,7 @@ async function shareEvent() {
 .event-display p strong {
   font-weight: bold;
 }
+
 
 .buttons {
   display: flex;

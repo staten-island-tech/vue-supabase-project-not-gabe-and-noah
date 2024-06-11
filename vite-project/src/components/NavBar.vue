@@ -1,6 +1,6 @@
 <template>
   <div class="barBody" :id="store.auth.log.toString()">
-    <div class="username">{{ store.auth.log ? 'Welcome!' : 'Sign In' }}</div>
+    <div class="username">{{ store.auth.log ? store.auth.name : 'Sign In' }}</div>
     <div class="links-container" v-if="store.auth.log">
       <router-link class="routerLink" to="/table-view">Table View</router-link>
       <router-link class="routerLink" to="/calendar">Calendar</router-link>
@@ -21,7 +21,7 @@ const store = info();
 <style scoped>
 .barBody {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
   padding: 10px;
   border: 1px solid #e5e5e5;
@@ -31,7 +31,6 @@ const store = info();
   right: 0;
   height: 5%;
   width: 100%;
-  box-sizing: border-box;
 }
 
 .username,
@@ -42,10 +41,7 @@ const store = info();
   font-weight: bold;
 }
 
-.links-container {
-  display: flex;
-  gap: 20px;
-}
+
 
 .routerLink {
   text-decoration: none;
