@@ -16,10 +16,10 @@ const store = dateInfo();
   });
   
   const isHoverable = computed(() => {
-    const date = parseInt(props.date);
+    const date:number = parseInt(props.date);
     console.log(date)
     return (date > 0);
-  });
+  });S
 
   </script>
   
@@ -29,7 +29,7 @@ const store = dateInfo();
     border: 1px gray solid;
     color: blue;
     position: relative;
-    display: flex;
+    display: flex;  
     justify-content: flex-start;
     align-items: flex-start;
     height: 100%;
