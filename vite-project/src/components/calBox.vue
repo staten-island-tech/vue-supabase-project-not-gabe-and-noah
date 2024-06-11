@@ -1,15 +1,12 @@
 <template>
-    <div @click="store.date.popUp = true;   $emit('popUp', [store.date.month, parseInt(props.date), store.date.year ])" :class="['box', { 'hoverable': isHoverable }]">
-      <p>{{ props.date }}</p>
-    </div>
-  </template>
-  
-  <script setup lang="ts">
-  import { defineProps, computed } from 'vue';
-  import { info } from "@/stores/store"
-  import { dateInfo } from   "@/stores/date"
-const store = dateInfo(); 
+  <div @click="handleClick" :class="['box', { 'hoverable': isHoverable }]">
+    <p>{{ props.date }}</p>
+  </div>
+</template>
 
+<script setup lang="ts">
+import { defineProps, computed, toRefs, defineEmits } from 'vue';
+import { dateInfo } from "@/stores/date";
 
   const props = defineProps({
     date: [Number, String]
@@ -21,7 +18,6 @@ const store = dateInfo();
     return (date > 0);
   });S
 
-  </script>
   
   <style scoped>
   .box {

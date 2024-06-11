@@ -1,48 +1,46 @@
 <template>
-    <div class="event-display">
-      <h2>Event Details</h2>
-      <p><strong>Title:</strong> {{ eventTitle }}</p>
-      <p><strong>Urgency:</strong> {{ urgency }}</p>
-      <p><strong>Time:</strong> {{ time }}</p>
-      <p><strong>Date:</strong> {{ date }}</p>
-      <p><strong>Username:</strong> {{ username }}</p>
-      <div class="buttons">
-        <button @click="acceptEvent">Accept</button>
-        <button @click="denyEvent">Deny</button>
-      </div>
+  <div class="event-display">
+    <h2>Event Details</h2>
+    <p><strong>Title:</strong> {{ props.eventTitle }}</p>
+    <p><strong>Urgency:</strong> {{ props.urgency }}</p>
+    <p><strong>Time:</strong> {{ props.time }}</p>
+    <p><strong>Date:</strong> {{ props.date }}</p>
+    <p><strong>Username:</strong> {{ props.username }}</p>
+    <div class="buttons">
+      <button @click="acceptEvent">Accept</button>
+      <button @click="denyEvent">Deny</button>
     </div>
-  </template>
-  
-  <script setup lang="ts">
-  import { defineProps, defineEmits } from 'vue';
-  
-  interface Props {
-    eventTitle: string;
-    urgency: string;
-    time: string;
-    date: string;
-    username: string;
-  }
-  
-  const props = defineProps<Props>();
-  const emit = defineEmits<{
-    (e: 'accept'): void;
-    (e: 'deny'): void;
-  }>();
-  
-  const acceptEvent = () => {
-    emit('accept');
-  };
-  
-  const denyEvent = () => {
-    emit('deny');
-  };
-  </script>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { defineProps, defineEmits } from 'vue';
+
+interface Props {
+  eventTitle: string;
+  urgency: string;
+  time: string;
+  date: string;
+  username: string;
+}
+
+const props = defineProps<Props>();
+const emit = defineEmits<{
+  (e: 'accept'): void;
+  (e: 'deny'): void;
+}>();
+
+function acceptEvent(){
+  emit('accept');
+};
+
+function denyEvent(){
+  emit('deny');
+};
+</script>
+
   
   <style scoped>
-  html, body{
-    background-color:teal;
-  }
 
   .event-display {
     background-color: #131515;

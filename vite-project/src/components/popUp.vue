@@ -1,105 +1,104 @@
 <template>
-    <div class="modal" v-if="store.date.popUp">
-      <div class="modal-content">
-        <span class="close" @click="store.date.popUp = false">&times;</span>
-        <h2>Create Event For {{ `${props.date[0] + 1}/${props.date[1]}/${props.date[2]}` }}</h2>
-        <form @submit.prevent="submitForm">
-          <div class="form-group">
-            <label for="event">Event Title:</label>
-            <input type="text" id="event" v-model="eventTitle" required>
-          </div>
-          <div class="form-group">
-            <label for="urgency">Urgency:</label>
-            <select id="urgency" v-model="urgency" required>
-              <option value="Low">Low</option>
-              <option value="Medium">Medium</option>
-              <option value="High">High</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="date">Date:</label>
-            <input type="date" id="date" v-model="eventDate" required>
-          </div>
-          <div class="form-group">
-            <label for="time">Time:</label>
-            <input type="time" id="time" v-model="eventTime" required>
-          </div>
-          <button type="submit" @click="test">Save</button>
-        </form>
-      </div>
+  <div class="modal" v-if="store.date.popUp">
+    <div class="modal-content">
+      <span class="close" @click="store.date.popUp = false">&times;</span>
+      <h2 v-if="props.date">Create Event For {{ `${props.date[0] + 1}/${props.date[1]}/${props.date[2]}` }}</h2>
+      <form>
+        <div class="form-group">
+          <label for="event">Event Title:</label>
+          <input type="text" id="event" v-model="eventTitle" required>
+        </div>
+        <div class="form-group">
+          <label for="urgency">Urgency:</label>
+          <select id="urgency" v-model="urgency" required>
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="date">Date:</label>
+          <input type="date" id="date" v-model="eventDate" required>
+        </div>
+        <div class="form-group">
+          <label for="time">Time:</label>
+          <input type="time" id="time" v-model="eventTime" required>
+        </div>
+        <button type="submit" @click.prevent="test">Save</button>
+      </form>
     </div>
-  </template>
-  
-  <script setup lang="ts">
-  import { ref, defineProps, PropType } from 'vue';
-  import { dateInfo } from "@/stores/date";
-import { supabase } from '@/lib/supabaseClient';
-  const store = dateInfo();
-  
-  const props = defineProps({
-    date: Array as PropType<[number, number, number]>,
-  });
-  
-  let eventTitle = ref('');
-  let urgency = ref('Low');
-  let eventDate = ref('');
-  let eventTime = ref('');
+  </div>
+</template>
 
-  async function test() {
- let newEvent = await supabase
-  .from('event')
-  .insert([
-    { eventName: eventTitle.value, dateDue: urgency.value, eventType: eventDate.value, eventUrgency: eventTime.value, },
-  ])
-  let recentEvent = await supabase
-  .from('event')
-  .select("*")
-  .eq('eventName', eventTitle.value)
-  recentEvent = recentEvent.data[recentEvent.data.length-1].id
-  const localUser = await supabase.auth.getUser();
-  let user = await supabase
-  .from('profiles')
-  .select("*")
-  .eq('id', localUser.data.user.id)
-  console.log(user.data[0].events)
-  if(user.data[0].events == null){
-    let updatedArray = await supabase
-  .from('profiles')
-  .update({ events: [recentEvent] })
-  .eq('id', localUser.data.user.id)
-  .select() 
-  } else{
-    let newArray = [...user.data[0].events, recentEvent.toString()]
-    console.log(user.data[0].events)
-    console.log(recentEvent)
-    console.log(newArray)
-    let updatedArray = await supabase
-  .from('profiles')
-  .update({ events: newArray })
-  .eq('id', localUser.data.user.id)}
-}
+<script setup lang="ts">
+import { ref, defineProps } from 'vue';
+import { dateInfo } from "@/stores/date";
+import { supabase } from '@/lib/supabaseClient.ts';
 
-  function submitForm() {
-    const eventDateArray = eventDate.split('-');
-    const year = parseInt(eventDateArray[0], 10);
-    const month = parseInt(eventDateArray[1], 10) - 1;
-    const day = parseInt(eventDateArray[2], 10);
+const store = dateInfo();
 
-    const eventObject = {
-      title: eventTitle,
-      urgency: urgency,
-      date: new Date(year, month, day),
-      time: eventTime,
-    };
-  
-    console.log(eventObject);
+const props = defineProps<{ date: [number, number, number] | null }>();
+
+let eventTitle = ref<string>('');
+let urgency = ref<string>('Low');
+let eventDate = ref<string>('');
+let eventTime = ref<string>('');
+
+async function test() {
+  try {
+    let newEvent = await supabase
+      .from('event')
+      .insert([
+        { eventName: eventTitle.value, dateDue: eventDate.value, eventType: eventTime.value, eventUrgency: urgency.value }
+      ]);
+
+    let recentEvent = await supabase
+      .from('event')
+      .select("*")
+      .eq('eventName', eventTitle.value);
+
+    if (recentEvent.data && recentEvent.data.length > 0) {
+      recentEvent = recentEvent.data[recentEvent.data.length - 1].id;
+    } else {
+      throw new Error('Event not found after insertion');
+    }
+
+    const localUser = await supabase.auth.getUser();
+
+    if (localUser.data && localUser.data.user) {
+      let user = await supabase
+        .from('profiles')
+        .select("*")
+        .eq('id', localUser.data.user.id);
+
+      if (user.data && user.data.length > 0) {
+        if (user.data[0].events == null) {
+          await supabase
+            .from('profiles')
+            .update({ events: [recentEvent] })
+            .eq('id', localUser.data.user.id)
+            .select();
+        } else {
+          let newArray = [...user.data[0].events, recentEvent.toString()];
+          await supabase
+            .from('profiles')
+            .update({ events: newArray })
+            .eq('id', localUser.data.user.id);
+        }
+      } else {
+        throw new Error('User not found');
+      }
+    } else {
+      throw new Error('Local user not found');
+    }
+
     store.date.popUp = false;
-    eventTitle = ''
-    urgency = ''
-    eventDate = ''
-    eventTime = ''
+  } catch (error) {
+    console.error('Error:', error);
   }
-  </script>
+}
+</script>
+
 
 <style scoped>
   .modal {

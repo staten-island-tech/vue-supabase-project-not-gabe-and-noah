@@ -13,8 +13,8 @@
         <span class="close-btn" @click="closePopup">×</span>
         <h3>Enter Username</h3>
         <input type="text" v-model="username" placeholder="Enter username">
-        <button @click="shareEvent">Share</button>
-      </div>
+<!--         <button @click="shareEvent">Share</button>
+ -->      </div>
     </div>
   </div>
 </template>
@@ -22,15 +22,14 @@
 <script setup lang="ts">
 import { defineProps, ref } from 'vue';
 import { supabase } from '@/lib/supabaseClient';
+const props = defineProps({
+  eventTitle: String,
+  urgency: String,
+  time: String,
+  date: String,
+})  
+console.log(props)
 
-interface Props {
-  eventTitle: string;
-  urgency: string;
-  time: string;
-  date: string;
-}
-
-const props = defineProps<Props>();
 const showPopup = ref(false);
 const username = ref('');
 
