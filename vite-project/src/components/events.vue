@@ -1,7 +1,6 @@
 <template>
   <div class="event-display">
-    <h2>Event Details</h2>
-    <p><strong>Title:</strong> {{ eventTitle }}</p>
+    <h2>{{ eventTitle }}</h2>
     <p><strong>Urgency:</strong> {{ urgency }}</p>
     <p><strong>Time:</strong> {{ time }}</p>
     <p><strong>Date:</strong> {{ date }}</p>
@@ -53,8 +52,9 @@ async function shareEvent() {
 
 <style scoped>
 .event-display {
-  max-width: 20%;
-
+  max-width: 10%;
+  max-height:100%;
+overflow: auto;
   padding: 50px;
   margin: 10px;
   margin-top: 10px;

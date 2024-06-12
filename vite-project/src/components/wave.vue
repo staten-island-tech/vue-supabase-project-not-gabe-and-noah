@@ -25,7 +25,7 @@
 }
 
 .wave {
-    background-image: linear-gradient(whitesmoke,white);
+    background-image: linear-gradient(45deg, #e3986e,#e3986e);
     border-radius: 1000% 1000% 0 0;
     position: fixed;
     width: 200%;

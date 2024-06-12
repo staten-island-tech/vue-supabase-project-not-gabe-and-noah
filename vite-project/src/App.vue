@@ -35,16 +35,17 @@ const store = info();
 .route-enter-active {
   transition: all .5s ease-out; 
 }
-/* .route-leave-to {
+.route-leave-to {
   opacity: 0;
   transform: translateY(-100px);
-  /* transform: translateX(-100px); */
-} */
+  transform: translateX(-100px);
+} 
 .route-leave-active {
   transition: all .5s ease-in; 
 }
 #bottom{
-  color:aqua;
+  background-color:#f8f1e0;
+  z-index: -10000;
   position: absolute;
   bottom: 0px;
   right: 0px;

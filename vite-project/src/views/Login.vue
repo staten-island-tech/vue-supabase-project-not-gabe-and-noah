@@ -167,12 +167,12 @@ onMounted(() => {
 h1 {
   font-weight: bold;
   margin: 0;
-  color: #fffafb;
+  color: #010503;
 }
 
 h2 {
   text-align: center;
-  color: #fffafb;
+  color: #010503;
 }
 
 p {
@@ -190,7 +190,7 @@ span {
 }
 
 a {
-  color: #339989;
+  color: #010503;
   font-size: 14px;
   text-decoration: none;
   margin: 15px 0;
@@ -198,8 +198,8 @@ a {
 
 button {
   border-radius: 20px;
-  border: 1px solid #339989;
-  background-color: #339989;
+  border: 1px solid #010503;
+  background-color: #010503;
   color: #fffafb;
   font-size: 12px;
   font-weight: bold;
@@ -283,7 +283,7 @@ input {
 .sign-up-container span,
 .sign-in-container p,
 .sign-up-container p {
-  color: #339989;
+  color: #010503;
 }
 
 .container.right-panel-active .sign-in-container {
@@ -332,10 +332,11 @@ input {
 }
 
 .overlay {
-  background: #339989;
-  background: -webkit-linear-gradient(to right, #339989, #7de2d1);
-  background: linear-gradient(to right, #339989, #7de2d1);
+  background: #010503;
+  background: -webkit-linear-gradient(to right, #C0C6CB, #98A5C0);
+  background: linear-gradient(to right, #C0C6CB, #98A5C0);
   background-repeat: no-repeat;
+  opacity: .8;
   background-size: cover;
   background-position: 0 0;
   color: #fffafb;
@@ -415,11 +416,11 @@ footer p {
 }
 
 footer i {
-  color: red;
+  color: #89847e;
 }
 
 footer a {
-  color: #339989;
+  color: #89847e;
   text-decoration: none;
 }
 </style>
