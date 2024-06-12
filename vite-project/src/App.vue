@@ -49,7 +49,7 @@ const store = info();
   position: absolute;
   bottom: 0px;
   right: 0px;
-  height: calc(100% - 5%);
+  height: calc(100% - 0%);
 }
 
 </style>

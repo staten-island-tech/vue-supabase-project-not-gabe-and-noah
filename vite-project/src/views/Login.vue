@@ -245,7 +245,7 @@ input {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 90vh;
+  height: 100vh;
   font-family: 'Montserrat', sans-serif;
   margin: 0;
   overflow: hidden;

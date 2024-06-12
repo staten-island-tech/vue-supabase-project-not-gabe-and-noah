@@ -1,12 +1,20 @@
 <template>
-  <div class="barBody" :id="store.auth.log.toString()">
-    <div class="username">{{ store.auth.log ? store.auth.name : 'Sign In' }}</div>
-    <div class="links-container" v-if="store.auth.log">
-      <router-link class="routerLink" to="/table-view">Table View</router-link>
-      <router-link class="routerLink" to="/calendar">Calendar</router-link>
-    </div>
-    <div v-if="store.auth.errorMessage" class="error-message">{{ store.auth.errorMessage }}</div>
-    <div class="clock"><BigFlockingClock /></div>
+  <div>
+    <nav class="nav-bar">
+        <div class="icon-nav">
+            <img src="https://i.imgur.com/xblVXWU.png" id='sea'>
+            <span class="logo">{{ store.auth.log ? store.auth.name : 'Sign In' }}</span>
+        </div>
+
+        <ul class="list-nav-bar active">
+            <li class="list-item"><a href="#">home</a></li>
+            <li class="list-item"><a href="#">pricing</a></li>
+            <li class="list-item"><a href="#">faq</a></li>
+            <li class="list-item"><a href="#">about</a></li>
+            <li class="list-item"><a href="#">contact</a></li>
+        </ul>
+        <div class="fas burger-menu" id="burger-menu">&#9776;</div>
+    </nav>
   </div>
 </template>
 
@@ -15,68 +23,141 @@ import { info } from "@/stores/store";
 import { ref } from "vue";
 import BigFlockingClock from './BigFlockingClock.vue';
 
+
 const store = info();
 </script>
 
 <style scoped>
-.barBody {
-  display: flex;
-  justify-content: space-between;
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+.icon-nav{
+    display: flex;
+  max-height: 100px;
   align-items: center;
-  padding: 10px;
-  border: 1px solid #e5e5e5;
-  background-color: #008080; /* Changed to a not-so-bright teal color */
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 5%;
-  width: 100%;
-  box-sizing: border-box;
 }
 
-.username {
-  font-size: 1.2em;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: bold;
-  text-align: left;
-  flex: 1;
+#sea{
+
+  width: auto;
+  height: 50px;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins','Open Sans',Arial;
 }
 
-.links-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex: 1;
+body {
+    min-height: 100vh;
+    background-image: url('https://i.pinimg.com/564x/9d/1f/2e/9d1f2e441590c09d737125a61b5f5281.jpg');
+    background-size: cover;
+    background-position: center;
 }
 
-.routerLink {
-  text-decoration: none;
-  text-align: center;
-  color: #333;
-  margin: 0 20px;
-  font-size: 1.2em;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: bold;
+
+.nav-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 1.5rem;
+    height: 60px;
+    background-color: rgba(0, 0, 0, 0.2);
 }
 
-.routerLink:hover {
-  color: #339989;
+.logo {
+    color: aliceblue;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 1.25rem;
+    margin-left: 12px;
+    cursor: pointer;
 }
 
-.clock {
-  font-size: 1.2em;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: bold;
-  text-align: right;
-  flex: 1;
-  display: flex;
-  justify-content: flex-end;
+.fas {
+    color: white;
+    font-size: 1.25rem;
+    cursor: pointer;
 }
 
-.error-message {
-  font-size: 1em;
-  color: #ff4b2b;
-  text-align: center;
-  font-family: 'Montserrat', sans-serif;
+.list-nav-bar {
+    list-style: none;
+    text-transform: uppercase;
+    display: flex;
+    gap: 20px;
 }
+
+.list-item a {
+    cursor: pointer;
+    font-size: 1.25rem;
+    text-decoration: none;
+    color: #fff;
+    text-align: center;
+    margin-left: 0.5rem;
+    letter-spacing: 0.1rem;
+}
+
+.list-item a:hover {
+    color: #a0a0a0;
+}
+
+.burger-menu {
+    display: none;
+}
+
+.main-content {
+    text-align: center;
+    margin-top: 25vh;
+}
+
+.main-content h1 {
+    color: #fff;
+    font-size: 3.5rem;
+}
+
+
+@media screen and (max-width: 768px) {
+
+    .list-item a {
+        font-size: 0.875rem;
+    }
+
+    .logo {
+        font-size: 0.875rem;
+    }
+}
+
+@media screen and (max-width: 578px) {
+
+    .list-item a {
+        font-size: 1rem;
+
+    }
+
+    .list-nav-bar.active {
+        right: 0;
+    }
+
+    .list-nav-bar {
+        display: flex;
+        position: fixed;
+        right: -100%;
+        top: 60px;
+        width: 35%;
+        background-color: rgba(0, 0, 0, 0.2);
+        text-align: center;
+        flex-direction: column;
+        transition: 0.7s;
+        gap: 18px;
+        border-radius: 0 0 10px 10px;
+    }
+
+    .burger-menu {
+        display: block;
+        cursor: pointer;
+    }
+}
+
 </style>
