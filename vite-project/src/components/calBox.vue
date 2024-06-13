@@ -8,7 +8,7 @@
     <div v-for="event in eventStore.data.events" >
     <div class="wow"   v-if="event['date'] ==  `${props.year}-${props.mon.length == 1 ? props.mon + 1 : 0 + (props.mon + 1).toString()}-${props.date.length == 1 ? 0 + props.date : props.date}`" :class="event['urgency']">
       <p v-if="event['date'] ==  `${props.year}-${props.mon.length == 1 ? props.mon + 1 : 0 + (props.mon + 1).toString()}-${props.date.length == 1 ? 0 + props.date : props.date}`">{{ event['eventTitle'] }}</p>
-      <p v-if="event['date'] ==  `${props.year}-${props.mon.length == 1 ? props.mon + 1 : 0 + (props.mon + 1).toString()}-${props.date.length == 1 ? 0 + props.date : props.date}`">{{ event['time'] }}</p>
+      <p v-if="event['date'] ==  `${props.year}-${props.mon.length == 1 ? props.mon + 1 : 0 + (props.mon + 1).toString()}-${props.date.length == 1 ? 0 + props.date : props.date}`">Due By: {{ event['time'] }}</p>
       <p v-if="event['date'] ==  `${props.year}-${props.mon.length == 1 ? props.mon + 1 : 0 + (props.mon + 1).toString()}-${props.date.length == 1 ? 0 + props.date : props.date}`">{{ event[''] }}</p>
     </div>
    

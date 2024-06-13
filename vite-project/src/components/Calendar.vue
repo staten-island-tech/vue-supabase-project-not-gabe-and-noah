@@ -14,9 +14,9 @@
         <calBox v-for="(date, index) in boxes"  :mon="currentMonth" :year="currentYear" :date="date" :key="index" :events="viewedArray" @popUp="(date) => popUp(date)"></calBox>
       </div>
       <div id="tasks">
-       <div id="topBar"><p id="dale">Daily Tasks</p>
+       <div id="topBar"><p id="dale">All Tasks</p>
       </div>
-      <div id="botBar"> <div v-for="i in viewedArray" v-if="i"><p>{{ i.time }}: {{ i.eventTitle }}</p></div></div>
+      <div id="botBar"> <div v-for="i in viewedArray"><p>{{i.date}}, {{ i.time }}: {{ i.eventTitle }}</p></div></div>
       </div>
          </div>
 </template>
