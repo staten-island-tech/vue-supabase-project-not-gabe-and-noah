@@ -6,14 +6,14 @@
             <span class="logo">{{ store.auth.log ? store.auth.name : 'Sign In' }}</span>
         </div>
 
-        <ul class="list-nav-bar active">
-            <li class="list-item"><a href="#">home</a></li>
-            <li class="list-item"><a href="#">pricing</a></li>
-            <li class="list-item"><a href="#">faq</a></li>
-            <li class="list-item"><a href="#">about</a></li>
-            <li class="list-item"><a href="#">contact</a></li>
+        <ul class="list-nav-bar active" v-if="store.auth.log">
+            <router-link class="routerLink" to="/table-view">Table View</router-link>
+            <router-link class="routerLink" to="/calendar">Calendar</router-link>
         </ul>
-        <div class="fas burger-menu" id="burger-menu">&#9776;</div>
+        <ul class="list-nav-bar active" v-if="!store.auth.log">
+            <li class="list-item" id="reddy" v-if="store.auth.errorMessage">{{ store.auth.errorMessage }}</li>
+
+        </ul>
     </nav>
   </div>
 </template>
@@ -30,6 +30,10 @@ const store = info();
 <style scoped>
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+#reddy{
+    color: red
+}
 
 .icon-nav{
     display: flex;
@@ -93,7 +97,7 @@ body {
     gap: 20px;
 }
 
-.list-item a {
+.list-item a, .routerLink  {
     cursor: pointer;
     font-size: 1.25rem;
     text-decoration: none;
@@ -102,6 +106,17 @@ body {
     margin-left: 0.5rem;
     letter-spacing: 0.1rem;
 }
+
+#reddy{
+    cursor: pointer;
+    font-size: 1.25rem;
+    text-decoration: none;
+    color: maroon;
+    text-align: center;
+    margin-left: 0.5rem;
+    letter-spacing: 0.1rem;
+}
+
 
 .list-item a:hover {
     color: #a0a0a0;
@@ -124,7 +139,7 @@ body {
 
 @media screen and (max-width: 768px) {
 
-    .list-item a {
+    .list-item a, #reddy {
         font-size: 0.875rem;
     }
 
@@ -135,7 +150,7 @@ body {
 
 @media screen and (max-width: 578px) {
 
-    .list-item a {
+    .list-item a, #reddy{
         font-size: 1rem;
 
     }

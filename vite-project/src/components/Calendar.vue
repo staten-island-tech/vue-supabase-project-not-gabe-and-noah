@@ -1,23 +1,25 @@
 <template>
   <div class="holder">
-    <div id="cal">      <p v-for="i in 5"></p>
-      <div id="forward" @click="nextMonth">
+    <div id="cal">      <p v-for="i in 4"></p>
+      <p>{{ currentMonthName }} {{ currentYear }}</p>
+      <div id="forward"@click="prevMonth">
         <img class="butt front" src="https://cdn.icon-icons.com/icons2/1674/PNG/512/arrowheadright_111038.png" >
       </div>
-      <div id="backward" @click="prevMonth">
+      <div id="backward" @click="nextMonth">
               <img class="butt back" src="https://cdn.icon-icons.com/icons2/1674/PNG/512/arrowheadright_111038.png"  >
             </div>
 
         <blankBox v-for="day in daysOfWeek" :day="day" :key="day"></blankBox>
-        <calBox v-for="(date, index) in boxes" :date="date" :key="index" @popUp="(date) => popUp(date)"></calBox>
+        <calBox v-for="(date, index) in boxes" :date="date" :key="index" :events="viewedArray" @popUp="(date) => popUp(date)"></calBox>
       </div>
+      <div id="tasks"><p>test</p></div>
          </div>
 </template>
 
 <script setup lang="ts">
 import calBox from '@/components/calBox.vue';
 import blankBox from './blankBox.vue';
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { dateInfo } from "@/stores/date";
 import popUpBox from "@/components/popUp.vue";
 
@@ -73,6 +75,79 @@ function nextMonth() {
 function prevMonth() {
   currentDate.value.setMonth(currentMonth.value - 1);
   currentDate.value = new Date(currentDate.value);
+}
+
+
+import { supabase } from "../lib/supabaseClient.ts";
+import events from "@/components/events.vue";
+import { info } from "@/stores/store"
+import { useRouter } from 'vue-router'
+import calendar from "@/components/Calendar.vue"
+const router = useRouter()
+
+interface Event {
+  id: number;
+  eventTitle: string;
+  date: string;
+  time: string;
+  urgency: string;
+}
+const viewedArray = ref<Event[]>([]);
+
+async function getUser() {
+  try {
+    const x = await supabase.auth.getUser();
+    if (x.data && x.data.user) {
+      const theThingy = await supabase
+        .from('profiles')
+        .select("*")
+        .eq('id', x.data.user.id);
+      if (theThingy.data && theThingy.data.length > 0) {
+        const eventsIds = theThingy.data[0].events;
+        const eventDataPromises = eventsIds.map(async (eventId: number) => {
+          const { data: eventData, error } = await supabase
+            .from('event')
+            .select("*") 
+            .eq('id', eventId);
+          if (error) {
+            console.error('not bazinga');
+            return null;
+          }
+          if (eventData && eventData.length > 0) {
+            return {
+              id: eventData[0].id,
+              eventTitle: eventData[0].eventName,
+              date: eventData[0].dateDue,
+              time: eventData[0].eventType,
+              urgency: eventData[0].eventUrgency
+            };
+          }
+          return null;
+        });
+        const eventDataArray = await Promise.all(eventDataPromises);
+        viewedArray.value = eventDataArray.filter(eventData => eventData !== null);
+        viewedArray.value.sort(compareFn);
+        console.log('ea')
+      }
+    }
+  } catch (error) {
+    console.error('not bazinga');
+  }
+}
+
+onMounted(() => {
+  getUser();
+})
+
+
+function compareFn(a: object, b: object) {
+  // let test = a['date'].split("-", 3)
+  if(a['date' as keyof Object].split("-", 3)[0] + a['date' as keyof Object].split("-", 3)[1] + a['date' as keyof Object].split("-", 3)[2] > b['date' as keyof Object].split("-", 3)[0] + b['date' as keyof Object].split("-", 3)[1] + b['date' as keyof Object].split("-", 3)[2]){
+    return -1
+  }
+else{
+  return 1
+}
 }
 </script>
 
@@ -144,16 +219,36 @@ img{
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows:(7, .05fr);
-  width: 80vw;
   height:calc(100vh - 100px);
-  padding: 10px;
-  border-radius: 10px; 
-  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  /* box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22); */
   position: absolute;
   bottom: 0%;
   left: 0;
   overflow:auto;
+
+  position: fixed;
+    width: 75%;
+    left: 0;
+    
+    z-index: 10;
 }
+
+#tasks {
+  background-color: lightgray;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows:(7, .05fr);
+  width: calc(20% - 1px);
+  height:calc(100vh - 100px);
+  position: absolute;
+  bottom: 0%;
+  right: 0;
+  overflow:auto;
+  position: fixed;
+    
+    z-index: 10;
+}
+
 
 .holder {
   display: flex;
@@ -161,7 +256,7 @@ img{
   align-items: center;
   justify-content: center;
   height: 100vh;
-  width: 100%;
+  width: 100vw;
   background-color: rgba(0,0,0,0);
   margin: 0;
   overflow: hidden;

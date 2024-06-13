@@ -5,8 +5,9 @@
     <p class="text">{{ props.date }}</p>
   </div>
   <div class="ev">
-    <div class="wow" v-for="i in 10">
-      <p>test</p>
+    <div class="wow" v-for="i in eventList">
+      <h3><b>{{i.eventTitle}}</b></h3>
+      <h4>{{ i.time }}</h4>
     </div>
   
     </div>
@@ -17,13 +18,18 @@
 <script setup lang="ts">
 import { defineProps, computed, toRefs, defineEmits } from 'vue';
 import { dateInfo } from "@/stores/date";
+import { onMounted } from 'vue';
 
 
 const store = dateInfo();
 
 const props = defineProps<{
   date: number | string;
+  events: object
 }>();
+
+console.log(props.events)
+let eventList = []
 
 const { date } = toRefs(props);
 
@@ -33,7 +39,7 @@ const emit = defineEmits<{
 
 const isHoverable = computed(() => {
   const dateValue = typeof date.value === 'string' ? parseInt(date.value) : date.value;
-  console.log(dateValue);
+  // console.log(dateValue);
   return dateValue > 0;
 });
 
@@ -44,6 +50,14 @@ const handleClick = () => {
     emit('popUp', [store.date.month, dateValue, store.date.year]);
   }
 };
+
+props.events.forEach(event => {
+  console.log(event)
+  if(event.date ==  `${store.date.year}-${ store.date.month.length == 1 ? store.date.month + 1 :  0 + String((store.date.month + 1))}-${ props.date.length > 1 ? parseInt(props.date) + 1 :  0 + String((parseInt(props.date) + 1)) }`){
+    console.log(event)
+    eventList.push(event)
+  }
+})
 </script>
   
   <style scoped>
@@ -58,13 +72,21 @@ p{
   margin: 7px;
 }
 
+h3{
+  font-size: 16px;
+  color: black;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
 .wow{
     background-color:ivory;
     border-radius: 10px;
-    height: 50px;
+    height: 75px;
+    overflow:auto;
   z-index: -1;
+  padding: 10px;
   border: 1px black solid;
-  margin: 10px;
+ 
 }
   .infoBox{
     display: flex;
