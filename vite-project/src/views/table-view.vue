@@ -1,7 +1,7 @@
 <template>
     <div class="container">
       <div v-if="viewedArray && viewedArray.length > 0" id="what">
-            <events v-for="event in viewedArray" :key="event.id" :eventTitle="event.eventTitle" :urgency="event.urgency" :time="event.time" :date="event.date" />
+            <events v-for="event in viewedArray" :key="event.id" :eventTitle="event.eventTitle" :urgency="event.urgency" :time="event.time" :date="event.date" :id="event.id"/>
       </div>
       <div v-else>
         Nothing here!

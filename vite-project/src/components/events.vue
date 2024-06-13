@@ -4,12 +4,13 @@
     <p><strong>Urgency:</strong> {{ urgency }}</p>
     <p><strong>Time:</strong> {{ time }}</p>
     <p><strong>Date:</strong> {{ date }}</p>
+    <button @click="deleteMe">delete {{ id }}</button>
     <div class="buttons">
       <!-- <button @click="openUsernamePopup">Share</button> -->
     </div>
     <div v-if="showPopup" class="popup">
       <div class="popup-content">
-        <span class="close-btn" @click="closePopup">×</span>
+        <span class="close-btn" @click="closePopup()"></span>
         <h3>Enter Username</h3>
         <input type="text" v-model="username" placeholder="Enter username">
 <!--         <button @click="shareEvent">Share</button>
@@ -26,8 +27,16 @@ const props = defineProps({
   urgency: String,
   time: String,
   date: String,
+  id: Number,
 })  
 console.log(props)
+
+async function deleteMe(){
+  const response = await supabase
+  .from('event')
+  .delete()
+  .eq('id', props.id)
+}
 
 const showPopup = ref(false);
 const username = ref('');
@@ -36,7 +45,7 @@ function openUsernamePopup() {
   showPopup.value = true;
 }
 
-function closePopup() {
+function closePopup(id: number | undefined) {
   showPopup.value = false;
 }
 
