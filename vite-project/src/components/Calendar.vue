@@ -1,19 +1,12 @@
 <template>
   <div class="holder">
-    <popUpBox v-if="showBox" :date="selectedDate"></popUpBox>
-    <div class="controls">
-      <div id="buttons"></div>
+    <div id="cal">
       <h1>{{ currentMonthName }} {{ currentYear }}</h1>
-    </div>
-    <div id="calCon">
-      <img class="calButt" id="calLeft" @click="prevMonth" src="https://icon-library.com/images/camping-icon-png/camping-icon-png-23.jpg">
-      <div id="cal">
+      <p v-for="i in 6"></p>
         <blankBox v-for="day in daysOfWeek" :day="day" :key="day"></blankBox>
         <calBox v-for="(date, index) in boxes" :date="date" :key="index" @popUp="(date) => popUp(date)"></calBox>
       </div>
-      <img class="calButt" id="calRight" @click="nextMonth" src="https://icon-library.com/images/camping-icon-png/camping-icon-png-23.jpg">
-    </div>
-  </div>
+         </div>
 </template>
 
 <script setup lang="ts">
@@ -112,13 +105,15 @@ html, body {
   background-color: #fffafb;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  grid-template-rows: 0.5fr repeat(6, 1fr);
-  width: 80%;
-  max-width: 1000px;
-  height: 600px;
+  grid-template-rows: 0.5fr  0.5fr repeat(6, 1fr);
+  width: 80vw;
+  height:80vh;
   padding: 10px;
   border-radius: 10px; 
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  position: absolute;
+  bottom: 0%;
+  left: 0;
 }
 
 .holder {

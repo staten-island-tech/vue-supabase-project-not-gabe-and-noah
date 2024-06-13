@@ -1,8 +1,12 @@
 <template>
   <div @click="handleClick" :class="['box', { 'hoverable': isHoverable }]">
     <div class="infoBox" v-if="props.date">
+      <div class="date">
     <p class="text">{{ props.date }}</p>
+  </div>
+  <div class="ev">
     <p>test</p>    <p>test</p>    <p>test</p>    <p>test</p>
+    </div>
   </div>
 </div>
 </template>
@@ -40,25 +44,32 @@ const handleClick = () => {
 </script>
   
   <style scoped>
+  .date{  
+    /* position: relative; */
+  height: 2%;
+    width: 20%;
+    border-bottom: 2px solid black;
+  }
 
+p{
+  margin: 7px;
+}
   .infoBox{
     display: flex;
     padding: 0px;
+    width: 100%;
     flex-direction: column;
-    overflow: auto;
+    justify-content: right;
   }
   .box {
     background-color: azure;
     border: 1px gray solid;
     color: blue;
     position: relative;
-    overflow: scroll;
     display: flex;  
     justify-content: flex-start;
     align-items: flex-start;
-height:91px;
--ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+height:94px;
     width: 1fr;
     box-sizing: border-box;
   }
@@ -66,7 +77,20 @@ height:91px;
   display: none;
 }
   
-  
+  .ev{
+    height:   92.7px;
+    overflow: auto;
+    -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+  transform: translateY(-34.8px);
+  width: 80%
+
+  }
+
+  .text{
+    height: 19.2px;
+  }
+
   .hoverable:hover {
     transition: 0.75s;
     background-color: gold;

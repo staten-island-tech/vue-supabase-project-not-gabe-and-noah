@@ -59,10 +59,14 @@ body {
 
 .nav-bar {
     display: flex;
+    z-index: 10000000;
     align-items: center;
     justify-content: space-between;
     align-items: center;
     padding: 25px 1.5rem;
+    position: absolute;
+    left: 1%;
+    width: 98%;
     height: 60px;
     background-color: rgba(0, 0, 0, 0.2);
 }

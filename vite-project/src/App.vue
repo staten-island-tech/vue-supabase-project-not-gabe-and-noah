@@ -45,7 +45,7 @@ const store = info();
 }
 #bottom{
   background-color:#f8f1e0;
-  z-index: -10000;
+  z-index: 10000;
   position: absolute;
   bottom: 0px;
   right: 0px;
