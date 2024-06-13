@@ -4,7 +4,7 @@
     <p><strong>Urgency:</strong> {{ urgency }}</p>
     <p><strong>Time:</strong> {{ time }}</p>
     <p><strong>Date:</strong> {{ date }}</p>
-    <button @click="deleteMe">delete {{ id }}</button>
+    <button @click="deleteMe">Delete Task</button>
     <div class="buttons">
       <!-- <button @click="openUsernamePopup">Share</button> -->
     </div>
