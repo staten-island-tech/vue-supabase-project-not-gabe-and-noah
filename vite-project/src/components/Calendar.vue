@@ -1,5 +1,6 @@
 <template>
   <div class="holder">
+    <popUpBox v-if="showBox" :date="selectedDate"></popUpBox>
     <div id="cal">      <p v-for="i in 4"></p>
       <p>{{ currentMonthName }} {{ currentYear }}</p>
       <div id="forward"@click="prevMonth">
@@ -10,7 +11,7 @@
             </div>
 
         <blankBox v-for="day in daysOfWeek" :day="day" :key="day"></blankBox>
-        <calBox v-for="(date, index) in boxes" :date="date" :key="index" :events="viewedArray" @popUp="(date) => popUp(date)"></calBox>
+        <calBox v-for="(date, index) in boxes"  :mon="currentMonth" :year="currentYear" :date="date" :key="index" :events="viewedArray" @popUp="(date) => popUp(date)"></calBox>
       </div>
       <div id="tasks"><p>test</p></div>
          </div>
@@ -21,7 +22,7 @@ import calBox from '@/components/calBox.vue';
 import blankBox from './blankBox.vue';
 import { ref, computed, onMounted } from 'vue';
 import { dateInfo } from "@/stores/date";
-import popUpBox from "@/components/popUp.vue";
+import popUpBox from "@/components/popUp.vue"
 import { eventsPin } from '@/stores/events.ts';
 
 const store = dateInfo();
@@ -72,11 +73,19 @@ function popUp(date: [number, number, number]) {
 function nextMonth() {
   currentDate.value.setMonth(currentMonth.value + 1);
   currentDate.value = new Date(currentDate.value);
+  if(store.date.month == 11){
+    store.date.month = 0
+    store.date.year++
+  }
 }
 
 function prevMonth() {
   currentDate.value.setMonth(currentMonth.value - 1);
   currentDate.value = new Date(currentDate.value);
+  if(store.date.month == 0){
+    store.date.month = 11
+    store.date.year--
+  }
 }
 
 

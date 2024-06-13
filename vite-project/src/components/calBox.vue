@@ -6,9 +6,9 @@
   </div>
   <div class="ev">
     <div class="wow" v-for="event in eventStore.data.events" :class="event['urgency']">
-      <p v-if="event['date'] ==  `${store.date.year}-${ store.date.month.length == 1 ? store.date.month + 1 :  0 + String((store.date.month + 1))}-${ props.date.length > 1 ? parseInt(props.date) + 1 :  0 + String((parseInt(props.date) + 1)) }`">{{ event['eventTitle'] }}</p>
-      <p v-if="event['date'] ==  `${store.date.year}-${ store.date.month.length == 1 ? store.date.month + 1 :  0 + String((store.date.month + 1))}-${ props.date.length > 1 ? parseInt(props.date) + 1 :  0 + String((parseInt(props.date) + 1)) }`">{{ event['time'] }}</p>
-      <p v-if="event['date'] ==  `${store.date.year}-${ store.date.month.length == 1 ? store.date.month + 1 :  0 + String((store.date.month + 1))}-${ props.date.length > 1 ? parseInt(props.date) + 1 :  0 + String((parseInt(props.date) + 1)) }`">{{ event[''] }}</p>
+      <p v-if="event['date'] ==  `${props.year}-${props.mon.length == 1 ? props.mon + 1 : 0 + (props.mon + 1).toString()}-${props.date.length == 1 ? 0 + props.date : props.date}`">{{ event['eventTitle'] }}</p>
+      <p v-if="event['date'] ==  `${store.date.year}-${store.date.month.length == 1 ? store.date.month + 1 : 0 + (store.date.month + 1).toString()}-${props.date}`">{{ event['time'] }}</p>
+      <p v-if="event['date'] ==  `${store.date.year}-${store.date.month.length == 1 ? store.date.month + 1 : 0 + (store.date.month + 1).toString()}-${props.date}`">{{ event[''] }}</p>
 
    
    
@@ -32,10 +32,19 @@ const store = dateInfo();
 const eventStore = eventsPin()
 const props = defineProps<{
   date: number | string;
-  events: string[]
+  events: string[];
+  mon: number;
+  year: number;
 }>();
 
-console.log(eventStore.data.events)
+
+
+// console.log(eventStore.data.events[2].date)
+console.log(props.mon + 1)
+console.log(props.year)
+console.log(props.date)
+console.log(`${props.year}-${props.mon.length == 1 ? props.mon + 1 : 0 + (props.mon + 1).toString()}-${props.date.length == 1 ? 0 + props.date : props.date}`)
+
 let eventList = []
 
 const { date } = toRefs(props);

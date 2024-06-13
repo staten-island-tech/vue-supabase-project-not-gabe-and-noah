@@ -34,9 +34,9 @@
 import { ref, defineProps } from 'vue';
 import { dateInfo } from "@/stores/date";
 import { supabase } from '@/lib/supabaseClient.ts';
-
+import { eventsPin } from '@/stores/events';
 const store = dateInfo();
-
+const eventStore = eventsPin()
 const props = defineProps<{ date: [number, number, number] | null }>();
 
 let eventTitle = ref<string>('');
@@ -51,7 +51,8 @@ async function test() {
       .insert([
         { eventName: eventTitle.value, dateDue: eventDate.value, eventType: eventTime.value, eventUrgency: urgency.value }
       ]);
-
+    eventStore.data.events.push({ eventName: eventTitle.value, dateDue: eventDate.value, eventType: eventTime.value, eventUrgency: urgency.value })
+    console.log(eventStore.data.events)
     let recentEvent = await supabase
       .from('event')
       .select("*")
@@ -103,7 +104,7 @@ async function test() {
 <style scoped>
   .modal {
     position: fixed;
-    z-index: 1;
+    z-index: 99999999999999999999999999999999999991;
     left: 0;
     top: 0;
     width: 100%;
