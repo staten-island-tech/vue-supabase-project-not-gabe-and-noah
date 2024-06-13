@@ -13,7 +13,7 @@
         <blankBox v-for="day in daysOfWeek" :day="day" :key="day"></blankBox>
         <calBox v-for="(date, index) in boxes"  :mon="currentMonth" :year="currentYear" :date="date" :key="index" :events="viewedArray" @popUp="(date) => popUp(date)"></calBox>
       </div>
-      <div id="tasks"><p>test</p></div>
+      <div id="tasks"><p>Daily Tasks</p></div>
          </div>
 </template>
 
