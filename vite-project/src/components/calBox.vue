@@ -51,11 +51,15 @@ const handleClick = () => {
   }
 };
 
+
 props.events.forEach(event => {
+  eventList.push(event)
   console.log(event)
-  if(event.date ==  `${store.date.year}-${ store.date.month.length == 1 ? store.date.month + 1 :  0 + String((store.date.month + 1))}-${ props.date.length > 1 ? parseInt(props.date) + 1 :  0 + String((parseInt(props.date) + 1)) }`){
-    console.log(event)
-    eventList.push(event)
+  if(event.date !=  `${store.date.year}-${ store.date.month.length == 1 ? store.date.month + 1 :  0 + String((store.date.month + 1))}-${ props.date.length > 1 ? parseInt(props.date) + 1 :  0 + String((parseInt(props.date) + 1)) }`){
+    eventList.splice(eventList.indexOf(event), 1)
+  }
+  else{
+    console.log('ea')
   }
 })
 </script>
