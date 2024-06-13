@@ -1,5 +1,5 @@
 <template>
-  <div class="event-display">
+  <div class="event-display" v-if="show">
     <h2>{{ eventTitle }}</h2>
     <p><strong>Urgency:</strong> {{ urgency }}</p>
     <p><strong>Time:</strong> {{ time }}</p>
@@ -22,6 +22,7 @@
 <script setup lang="ts">
 import { defineProps, ref } from 'vue';
 import { supabase } from '@/lib/supabaseClient';
+let show = ref(true)
 const props = defineProps({
   eventTitle: String,
   urgency: String,
@@ -36,6 +37,7 @@ async function deleteMe(){
   .from('event')
   .delete()
   .eq('id', props.id)
+  show.value = false
 }
 
 const showPopup = ref(false);
