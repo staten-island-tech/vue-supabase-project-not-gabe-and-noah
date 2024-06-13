@@ -96,13 +96,13 @@ if (store.auth.log) {
   height: 100%;
   overflow-y: auto;
     position: absolute;
-    top: 0;
+    bottom: 0;
     display: flex;
     flex-direction: column;
     left: 0;
     width: 100%;
-    height: 100%;
-    background-color: yellow;
+    height:calc(100vh - 100px);
+    
 }
 
 </style>

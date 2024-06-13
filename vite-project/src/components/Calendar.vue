@@ -13,7 +13,11 @@
         <blankBox v-for="day in daysOfWeek" :day="day" :key="day"></blankBox>
         <calBox v-for="(date, index) in boxes"  :mon="currentMonth" :year="currentYear" :date="date" :key="index" :events="viewedArray" @popUp="(date) => popUp(date)"></calBox>
       </div>
-      <div id="tasks"><p>Daily Tasks</p></div>
+      <div id="tasks">
+       <div id="topBar"><p id="dale">Daily Tasks</p>
+      </div>
+      <div id="botBar"> <div v-for="i in viewedArray" v-if="i"><p>{{ i.time }}: {{ i.eventTitle }}</p></div></div>
+      </div>
          </div>
 </template>
 
@@ -66,8 +70,11 @@ const boxes = computed(() => {
 function popUp(date: [number, number, number]) {
   if (Array.isArray(date) && date.length === 3 && !isNaN(date[0]) && !isNaN(date[1]) && !isNaN(date[2])) {
     selectedDate.value = date;
+    console.log(selectedDate.value)
+    store.date.format = `${store.date.year}-${store.date.month.length == 1 ? store.date.month + 1 : 0 + (store.date.month + 1).toString()}-${selectedDate.value[1].length == 1 ? 0 + selectedDate.value[1] :  (selectedDate.value[1]).toString()}`
+    console.log(store.date.format)
     showBox.value = true;
-  }
+  } 
 }
 
 function nextMonth() {
@@ -175,6 +182,10 @@ html, body {
   overflow: hidden;
 }
 
+#dale{
+  font-size: 1.25rem;
+}
+
 .front{
   transform:rotate(180deg)
 }
@@ -191,14 +202,27 @@ html, body {
 
 .forward, .backward{
   display: flex;
-  height: 110%;
+  height: 100%;
   text-align: center;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
+#topBar{
+  font-size: 2rem;
+  display: flex;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  background-color: whitesmoke;
+  height: 50px;
+  outline: 2px solid black;
+}
+
 img{
-  height: 40px;
+  height: 50px;
+  align-self: center;
   margin: 10px;
 }
 #calCon {
@@ -241,7 +265,7 @@ img{
   overflow:auto;
 
   position: fixed;
-    width: 75%;
+    width: 85%;
     left: 0;
     
     z-index: 10;
@@ -249,14 +273,14 @@ img{
 
 #tasks {
   background-color: lightgray;
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  grid-template-rows:(7, .05fr);
-  width: calc(20% - 1px);
-  height:calc(100vh - 100px);
+  display: flex;
+  flex-direction: column;
+  width: calc(15% + 0px);
+  height:calc(100vh - 101px);
   position: absolute;
   bottom: 0%;
   right: 0;
+  outline: 2px solid black;
   overflow:auto;
   position: fixed;
     

@@ -7,8 +7,10 @@
         </div>
 
         <ul class="list-nav-bar active" v-if="store.auth.log">
+            <BigFlockingClock class="routerLink"></BigFlockingClock>
             <router-link class="routerLink" to="/table-view">Table View</router-link>
             <router-link class="routerLink" to="/calendar">Calendar</router-link>
+            <router-link class="routerLink" to="/list">List</router-link>
         </ul>
         <ul class="list-nav-bar active" v-if="!store.auth.log">
             <li class="list-item" id="reddy" v-if="store.auth.errorMessage">{{ store.auth.errorMessage }}</li>

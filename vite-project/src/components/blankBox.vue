@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="box">
-            <p>{{ props.day }}</p>
+            <p class="dae">{{ props.day }}</p>
         </div>
     </div>
 </template>
@@ -16,8 +16,12 @@ const props = defineProps({
 .box{
     z-index: 222;
     height:100%;
-    background-color:beige;
+    background-color:#508b74;
+    color: white;
     border: 2px black solid;
     color: green;
+}
+.dae{
+    color: white;
 }
 </style>

@@ -5,7 +5,7 @@
     <p><strong>Time:</strong> {{ time }}</p>
     <p><strong>Date:</strong> {{ date }}</p>
     <div class="buttons">
-      <button @click="openUsernamePopup">Share</button>
+      <!-- <button @click="openUsernamePopup">Share</button> -->
     </div>
     <div v-if="showPopup" class="popup">
       <div class="popup-content">
@@ -52,6 +52,7 @@ async function shareEvent() {
 
 <style scoped>
 .event-display {
+  width: 10%;
   max-width: 10%;
   max-height:100%;
 overflow: auto;
@@ -59,7 +60,7 @@ overflow: auto;
   margin: 10px;
   margin-top: 10px;
   border: 1px solid #ccc;
-  background-color: #131515;
+  background-image: linear-gradient(45deg, rgba(255,255,255,0.9), rgba(152,165,192,0.9));
   border-radius: 5px;
 }
 
@@ -70,7 +71,7 @@ overflow: auto;
 
 .event-display p {
   margin: 10px 0;
-  color: #ccc;
+  color: black;
 }
 
 .event-display p strong {
@@ -90,7 +91,7 @@ overflow: auto;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(255,255, 255, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;

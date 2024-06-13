@@ -6,6 +6,7 @@ export const dateInfo = defineStore('dates', () => {
     month: 0,
     year: 0,
     popUp: true,
+    format: ''
   })
 
   return { date }

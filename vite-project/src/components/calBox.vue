@@ -5,11 +5,12 @@
     <p class="text">{{ props.date }}</p>
   </div>
   <div class="ev">
-    <div class="wow" v-for="event in eventStore.data.events" :class="event['urgency']">
+    <div v-for="event in eventStore.data.events" >
+    <div class="wow"   v-if="event['date'] ==  `${props.year}-${props.mon.length == 1 ? props.mon + 1 : 0 + (props.mon + 1).toString()}-${props.date.length == 1 ? 0 + props.date : props.date}`" :class="event['urgency']">
       <p v-if="event['date'] ==  `${props.year}-${props.mon.length == 1 ? props.mon + 1 : 0 + (props.mon + 1).toString()}-${props.date.length == 1 ? 0 + props.date : props.date}`">{{ event['eventTitle'] }}</p>
-      <p v-if="event['date'] ==  `${store.date.year}-${store.date.month.length == 1 ? store.date.month + 1 : 0 + (store.date.month + 1).toString()}-${props.date}`">{{ event['time'] }}</p>
-      <p v-if="event['date'] ==  `${store.date.year}-${store.date.month.length == 1 ? store.date.month + 1 : 0 + (store.date.month + 1).toString()}-${props.date}`">{{ event[''] }}</p>
-
+      <p v-if="event['date'] ==  `${props.year}-${props.mon.length == 1 ? props.mon + 1 : 0 + (props.mon + 1).toString()}-${props.date.length == 1 ? 0 + props.date : props.date}`">{{ event['time'] }}</p>
+      <p v-if="event['date'] ==  `${props.year}-${props.mon.length == 1 ? props.mon + 1 : 0 + (props.mon + 1).toString()}-${props.date.length == 1 ? 0 + props.date : props.date}`">{{ event[''] }}</p>
+    </div>
    
    
     </div>
@@ -38,7 +39,7 @@ const props = defineProps<{
 }>();
 
 
-
+store.date.format = `${store.date.year}-${store.date.month.length == 1 ? store.date.month + 1 : 0 + (store.date.month + 1).toString()}-${props.date}`
 // console.log(eventStore.data.events[2].date)
 console.log(props.mon + 1)
 console.log(props.year)
@@ -63,6 +64,7 @@ const handleClick = () => {
   store.date.popUp = true;
   console.log('ea')
   const dateValue = typeof props.date === 'string' ? parseInt(props.date) : props.date;
+  
   if (!isNaN(dateValue)) {
     emit('popUp', [store.date.month, dateValue, store.date.year]);
   }
@@ -116,6 +118,7 @@ h3{
     /* background-color:ivory; */
     border-radius: 10px;
     max-height: 76px;
+    outline: 2px solid black;
     overflow:auto;
   z-index: -1;
   /* border: 1px black solid; */
@@ -160,6 +163,6 @@ height:100%;
 
   .hoverable:hover {
     transition: 0.75s;
-    background-color: gold;
+    background-color: rgba(0,255,55,0.2);
   }
   </style>

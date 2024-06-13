@@ -51,8 +51,7 @@ async function test() {
       .insert([
         { eventName: eventTitle.value, dateDue: eventDate.value, eventType: eventTime.value, eventUrgency: urgency.value }
       ]);
-    eventStore.data.events.push({ eventName: eventTitle.value, dateDue: eventDate.value, eventType: eventTime.value, eventUrgency: urgency.value })
-    console.log(eventStore.data.events)
+
     let recentEvent = await supabase
       .from('event')
       .select("*")

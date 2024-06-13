@@ -1,7 +1,5 @@
 <template>
-  <div>
       <p>{{ currentTime.split(",").pop() }}</p>
-  </div>
 </template>
 
 <script setup lang="ts">
