@@ -2,10 +2,10 @@
   <div class="holder">
     <div id="cal">      <p v-for="i in 5"></p>
       <div id="forward" @click="nextMonth">
-        <img src="https://www.svgrepo.com/show/12963/left-arrow.svg" >
+        <img class="butt front" src="https://cdn.icon-icons.com/icons2/1674/PNG/512/arrowheadright_111038.png" >
       </div>
       <div id="backward" @click="prevMonth">
-              <img src="https://www.svgrepo.com/show/12963/left-arrow.svg"  >
+              <img class="butt back" src="https://cdn.icon-icons.com/icons2/1674/PNG/512/arrowheadright_111038.png"  >
             </div>
 
         <blankBox v-for="day in daysOfWeek" :day="day" :key="day"></blankBox>
@@ -86,19 +86,31 @@ html, body {
   overflow: hidden;
 }
 
+.front{
+  transform:rotate(180deg)
+}
+
 .aaa{
   font-size: 1.75rem;
   overflow: hidden;
 }
 
+.butt{
+  margin: auto;
+  display: block;
+}
+
 .forward, .backward{
   display: flex;
+  height: 110%;
+  text-align: center;
   align-items: center;
   justify-content: center;
 }
 
 img{
-  height: 30px;
+  height: 40px;
+  margin: 10px;
 }
 #calCon {
   width: 100%;
@@ -128,7 +140,7 @@ img{
 }
 
 #cal {
-  background-color: #fffafb;
+  background-color: lightgray;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows:(7, .05fr);
@@ -150,7 +162,7 @@ img{
   justify-content: center;
   height: 100vh;
   width: 100%;
-  background-color: #131515;
+  background-color: rgba(0,0,0,0);
   margin: 0;
   overflow: hidden;
 }

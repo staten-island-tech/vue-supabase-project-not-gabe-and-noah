@@ -1,6 +1,7 @@
 <template>
   <div class="page">
-    <wave></wave>
+    
+    <!-- <wave></wave> -->
     <div class="container" id="container">
       <div class="form-container sign-up-container">
         <form action="#">

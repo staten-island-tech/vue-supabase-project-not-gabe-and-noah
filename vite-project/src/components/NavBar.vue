@@ -68,7 +68,7 @@ body {
     left: 1%;
     width: 98%;
     height: 60px;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .logo {

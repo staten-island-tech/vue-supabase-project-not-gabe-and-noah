@@ -44,12 +44,27 @@ const store = info();
   transition: all .5s ease-in; 
 }
 #bottom{
-  background-color:#f8f1e0;
+  background-color:lightgray;
   z-index: 10000;
   position: absolute;
   bottom: 0px;
   right: 0px;
   height: calc(100% - 0%);
+  background-image: 
+    repeating-linear-gradient(
+      -45deg, 
+      transparent, 
+      transparent 1rem,
+      white 1rem,
+      white 2rem
+    );
+  background-size: 200% 200%;
+  animation: barberpole 200s linear infinite;
 }
 
+@keyframes barberpole {
+  100% {
+    background-position: 100% 100%;
+  }
+}
 </style>
