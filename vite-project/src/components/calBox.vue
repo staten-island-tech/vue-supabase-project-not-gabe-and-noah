@@ -1,11 +1,14 @@
 <template>
   <div @click="handleClick" :class="['box', { 'hoverable': isHoverable }]">
-    <div class="infoBox" v-if="props.date">
+    <div class="infoBox" v-if="props.date" @click="handleClick">
       <div class="date">
     <p class="text">{{ props.date }}</p>
   </div>
   <div class="ev">
-    <p>test</p>    <p>test</p>    <p>test</p>    <p>test</p>
+    <div class="wow" v-for="i in 10">
+      <p>test</p>
+    </div>
+  
     </div>
   </div>
 </div>
@@ -46,7 +49,7 @@ const handleClick = () => {
   <style scoped>
   .date{  
     /* position: relative; */
-  height: 2%;
+  height: 100%;
     width: 20%;
     border-bottom: 2px solid black;
   }
@@ -54,22 +57,31 @@ const handleClick = () => {
 p{
   margin: 7px;
 }
+
+.wow{
+    background-color:ivory;
+    border-radius: 10px;
+    height: 50px;
+  z-index: -1;
+  border: 1px black solid;
+  margin: 10px;
+}
   .infoBox{
     display: flex;
     padding: 0px;
     width: 100%;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: right;
   }
   .box {
-    background-color: azure;
+    background-color: white;
     border: 1px gray solid;
     color: blue;
     position: relative;
     display: flex;  
     justify-content: flex-start;
     align-items: flex-start;
-height:94px;
+height:100%;
     width: 1fr;
     box-sizing: border-box;
   }
@@ -78,11 +90,11 @@ height:94px;
 }
   
   .ev{
-    height:   92.7px;
+    height: 124px;
     overflow: auto;
     -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
-  transform: translateY(-34.8px);
+  /* transform: translateY(-34.8px); */
   width: 80%
 
   }

@@ -1,8 +1,13 @@
 <template>
   <div class="holder">
-    <div id="cal">
-      <h1>{{ currentMonthName }} {{ currentYear }}</h1>
-      <p v-for="i in 6"></p>
+    <div id="cal">      <p v-for="i in 5"></p>
+      <div id="forward" @click="nextMonth">
+        <img src="https://www.svgrepo.com/show/12963/left-arrow.svg" >
+      </div>
+      <div id="backward" @click="prevMonth">
+              <img src="https://www.svgrepo.com/show/12963/left-arrow.svg"  >
+            </div>
+
         <blankBox v-for="day in daysOfWeek" :day="day" :key="day"></blankBox>
         <calBox v-for="(date, index) in boxes" :date="date" :key="index" @popUp="(date) => popUp(date)"></calBox>
       </div>
@@ -45,6 +50,11 @@ const boxes = computed(() => {
   for (let i = 1; i <= daysInMonth.value; i++) {
     days.push(i.toString());
   }
+  // console.log(days)
+  // for(let i = 0; i < 42 - days.length + 5; i++ ){
+  //   days.push('')
+  // }
+  console.log(days)
   return days;
 });
 
@@ -68,12 +78,28 @@ function prevMonth() {
 
 
 <style>
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 html, body {
   height: 100%;
   overflow: hidden;
 }
 
+.aaa{
+  font-size: 1.75rem;
+  overflow: hidden;
+}
+
+.forward, .backward{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+img{
+  height: 30px;
+}
 #calCon {
   width: 100%;
   height:100%;
@@ -105,15 +131,16 @@ html, body {
   background-color: #fffafb;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  grid-template-rows: 0.5fr  0.5fr repeat(6, 1fr);
+  grid-template-rows:(7, .05fr);
   width: 80vw;
-  height:80vh;
+  height:calc(100vh - 100px);
   padding: 10px;
   border-radius: 10px; 
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
   position: absolute;
   bottom: 0%;
   left: 0;
+  overflow:auto;
 }
 
 .holder {

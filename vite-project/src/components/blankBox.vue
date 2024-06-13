@@ -14,6 +14,7 @@ const props = defineProps({
 
 <style scoped>
 .box{
+    height:100%;
     background-color:beige;
     border: 2px black solid;
     color: green;
