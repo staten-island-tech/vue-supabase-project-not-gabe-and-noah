@@ -22,8 +22,10 @@ import blankBox from './blankBox.vue';
 import { ref, computed, onMounted } from 'vue';
 import { dateInfo } from "@/stores/date";
 import popUpBox from "@/components/popUp.vue";
+import { eventsPin } from '@/stores/events.ts';
 
 const store = dateInfo();
+const eventStore = eventsPin();
 const showBox = ref(false);
 const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 const currentDate = ref(new Date());
@@ -128,6 +130,9 @@ async function getUser() {
         viewedArray.value = eventDataArray.filter(eventData => eventData !== null);
         viewedArray.value.sort(compareFn);
         console.log('ea')
+        eventStore.data.events = viewedArray
+        console.log(eventStore.data.events)
+
       }
     }
   } catch (error) {

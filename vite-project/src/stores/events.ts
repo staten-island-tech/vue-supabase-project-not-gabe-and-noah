@@ -5,10 +5,10 @@ interface AuthState {
 events: object
 }
 
-export const events = defineStore('events', () => {
-  const auth = ref<AuthState>({
+export const eventsPin = defineStore('eventsPin', () => {
+  const data = ref<AuthState>({
     events: {},
   });
 
-  return { auth };
+  return { data };
 });

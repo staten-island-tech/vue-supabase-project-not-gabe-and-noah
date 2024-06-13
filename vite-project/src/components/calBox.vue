@@ -5,11 +5,16 @@
     <p class="text">{{ props.date }}</p>
   </div>
   <div class="ev">
-    <div class="wow" v-for="i in eventList">
-      <h3><b>{{i.eventTitle}}</b></h3>
-      <h4>{{ i.time }}</h4>
+    <div class="wow" v-for="event in eventStore.data.events" :class="event['urgency']">
+      <p v-if="event['date'] ==  `${store.date.year}-${ store.date.month.length == 1 ? store.date.month + 1 :  0 + String((store.date.month + 1))}-${ props.date.length > 1 ? parseInt(props.date) + 1 :  0 + String((parseInt(props.date) + 1)) }`">{{ event['eventTitle'] }}</p>
+      <p v-if="event['date'] ==  `${store.date.year}-${ store.date.month.length == 1 ? store.date.month + 1 :  0 + String((store.date.month + 1))}-${ props.date.length > 1 ? parseInt(props.date) + 1 :  0 + String((parseInt(props.date) + 1)) }`">{{ event['time'] }}</p>
+      <p v-if="event['date'] ==  `${store.date.year}-${ store.date.month.length == 1 ? store.date.month + 1 :  0 + String((store.date.month + 1))}-${ props.date.length > 1 ? parseInt(props.date) + 1 :  0 + String((parseInt(props.date) + 1)) }`">{{ event[''] }}</p>
+
+   
+   
     </div>
   
+
     </div>
   </div>
 </div>
@@ -18,17 +23,19 @@
 <script setup lang="ts">
 import { defineProps, computed, toRefs, defineEmits } from 'vue';
 import { dateInfo } from "@/stores/date";
-import { onMounted } from 'vue';
+import { eventsPin } from '@/stores/events';
+
+
 
 
 const store = dateInfo();
-
+const eventStore = eventsPin()
 const props = defineProps<{
   date: number | string;
-  events: object
+  events: string[]
 }>();
 
-console.log(props.events)
+console.log(eventStore.data.events)
 let eventList = []
 
 const { date } = toRefs(props);
@@ -45,6 +52,7 @@ const isHoverable = computed(() => {
 
 const handleClick = () => {
   store.date.popUp = true;
+  console.log('ea')
   const dateValue = typeof props.date === 'string' ? parseInt(props.date) : props.date;
   if (!isNaN(dateValue)) {
     emit('popUp', [store.date.month, dateValue, store.date.year]);
@@ -52,19 +60,31 @@ const handleClick = () => {
 };
 
 
-props.events.forEach(event => {
-  eventList.push(event)
-  console.log(event)
-  if(event.date !=  `${store.date.year}-${ store.date.month.length == 1 ? store.date.month + 1 :  0 + String((store.date.month + 1))}-${ props.date.length > 1 ? parseInt(props.date) + 1 :  0 + String((parseInt(props.date) + 1)) }`){
-    eventList.splice(eventList.indexOf(event), 1)
-  }
-  else{
-    console.log('ea')
-  }
-})
+
+// eventStore.data.events.forEach(event => {
+//   console.log(event)
+//   if(event ==  `${store.date.year}-${ store.date.month.length == 1 ? store.date.month + 1 :  0 + String((store.date.month + 1))}-${ props.date.length > 1 ? parseInt(props.date) + 1 :  0 + String((parseInt(props.date) + 1)) }`){
+//     eventList.push(event)
+//   }
+// })
 </script>
   
   <style scoped>
+
+
+.Medium{
+  background-color: #CCCFBC;
+}
+
+.High{
+  background-color: #997570
+}
+
+.Low{
+  background-color: #96ae8d;
+}
+
+
   .date{  
     /* position: relative; */
   height: 100%;
@@ -83,14 +103,14 @@ h3{
 }
 
 .wow{
-    background-color:ivory;
+  /* outline: 2px solid black; */
+    /* background-color:ivory; */
     border-radius: 10px;
-    height: 75px;
+    max-height: 76px;
     overflow:auto;
   z-index: -1;
-  padding: 10px;
-  border: 1px black solid;
- 
+  /* border: 1px black solid; */
+  margin: 10px;
 }
   .infoBox{
     display: flex;
